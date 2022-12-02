@@ -11,6 +11,7 @@ import {
 import React from "react";
 import { theme } from "../../theme";
 import { ReactComponent as Options } from "../assets/Options.svg";
+import { CDSConfirmDelete } from "../common/CDSConfirmDelete";
 interface TableRowProps {
   rowData: any;
   index: number;
@@ -23,6 +24,10 @@ export const TableRow: React.FC<TableRowProps> = ({
   onDelete,
   onUpdate,
 }) => {
+  const confirmDelete = (index: number, onClose: () => void) => {
+    onDelete(index);
+    onClose();
+  };
   return (
     <Tr fontWeight={500} color="blue.700" fontSize={16}>
       <Td borderRight="1px solid" borderRightColor="neutralGrey" isNumeric>
@@ -49,14 +54,16 @@ export const TableRow: React.FC<TableRowProps> = ({
             variant="outline"
           />
           <MenuList bg={"blue.100"}>
-            <MenuItem
-              color={"danger.1500"}
-              onClick={() => {
-                onDelete(index);
-              }}
-            >
-              Delete
-            </MenuItem>
+            <CDSConfirmDelete handleDelete={confirmDelete} index={index}>
+              <MenuItem
+                color={"danger.500"}
+                onClick={() => {
+                  onDelete(index);
+                }}
+              >
+                Delete
+              </MenuItem>
+            </CDSConfirmDelete>
             <MenuItem
               color={"danger.1500"}
               onClick={() => {

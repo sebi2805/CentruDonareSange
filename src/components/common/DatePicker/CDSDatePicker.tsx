@@ -10,8 +10,9 @@ export const CDSDatePicker: React.FC<CDSDatePickerInterface> = (props) => {
   const { onChange, error, value, ...others } = props;
   const [errorDate, setError] = useState<boolean>(true);
   const [inputDate, setDate] = useState<string>(
-    value ?? `${moment().toISOString()}`
+    moment(value).toISOString() ?? `${moment().toISOString()}`
   );
+
   const dateToIso = (date: string) => {
     return moment(date).toISOString();
   };

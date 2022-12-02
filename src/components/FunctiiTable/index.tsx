@@ -1,21 +1,13 @@
-import {
-  Box,
-  HStack,
-  Spacer,
-  Spinner,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, HStack, Spacer, useDisclosure, VStack } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
+import { ErrorServiceContext } from "../../App";
+import { CDSInput } from "../common/InputComponent";
 import { NameWrap } from "../common/NameWrap";
 import { CustomSpinner } from "../common/Spinner";
-import { CDSInput } from "../common/InputComponent";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
 import { FunctiiInterface } from "./types";
-import { useError } from "../common/ErrorService";
-import { ErrorServiceContext } from "../../App";
 
 export const FunctiiTable: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,7 +22,6 @@ export const FunctiiTable: React.FC = () => {
     await apiClient
       .get(`/api/Functii/get-all`)
       .then((res) => {
-        console.log(res.data.data);
         setData(res.data.data);
         setLoading(true);
       })
@@ -69,7 +60,6 @@ export const FunctiiTable: React.FC = () => {
     apiClient
       .post(`/api/Functii/create`, currentData)
       .then((res) => {
-        console.log(res.data.data);
         setData([...data, res.data.data]);
         setLoading(true);
         onCloseModal();

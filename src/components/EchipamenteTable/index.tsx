@@ -18,22 +18,21 @@ import { FunctiiInterface } from "../FunctiiTable/types";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
-import { ReviziiTehniceInterface } from "./types";
 
-export const ReviziiTehniceTable: React.FC = () => {
+export const EchipamentTable: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { createError, createToast } = useContext(ErrorServiceContext);
   const [options, setOptions] = useState<SearchSelectInterface[]>([]);
-  const [data, setData] = useState<ReviziiTehniceInterface[]>([]);
+  const [data, setData] = useState<EchipamenteInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [currentData, setCurrentData] = useState<ReviziiTehniceInterface>({
-    dataRevizie: moment().toString(),
-    rezultatRevizie: "",
-    idEchipament: 0,
+  const [currentData, setCurrentData] = useState<EchipamenteInterface>({
+    denumireTehnica: "",
+    serie: "",
+    dataCumparare: moment().toISOString(),
   });
   const getData = async () => {
     await apiClient
-      .get(`/api/ReviziiTehnice/get-all`)
+      .get(`/api/Echipamente/get-all`)
       .then((res) => {
         setData(res.data.data);
         setLoading(true);
@@ -44,26 +43,13 @@ export const ReviziiTehniceTable: React.FC = () => {
         console.log(err);
         createError("Can't get data.");
       });
-    await apiClient
-      .get(`/api/Echipamente/get-all`)
-      .then((res) => {
-        setOptions(
-          res.data.data?.map((e: EchipamenteInterface) => {
-            return { value: e.idEchipament, label: e.denumireTehnica };
-          })
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-        createError("Can't get options.");
-      });
   };
   const onCloseModal = () => {
     onClose();
     setCurrentData({
-      dataRevizie: moment().toString(),
-      rezultatRevizie: "",
-      idEchipament: 0,
+      dataCumparare: moment().toISOString(),
+      denumireTehnica: "",
+      serie: "",
     });
   };
   const onOpenUpdate = (index: number) => {
@@ -74,41 +60,42 @@ export const ReviziiTehniceTable: React.FC = () => {
   const onUpdate = () => {
     apiClient
       .put(
-        `/api/ReviziiTehnice/update?id=${currentData.idRevizieTehnica}`,
+        `/api/Echipamente/update?id=${currentData.idEchipament}`,
         currentData
       )
       .then((res) => {
         setData(
           data.map((d) => {
-            if (d.idRevizieTehnica === currentData.idRevizieTehnica)
+            if (d.idEchipament === currentData.idEchipament)
               return res.data.data;
             else return d;
           })
         );
-        createToast("RevizieTehnica updated succesufully");
+        createToast("Echipament updated succesufully");
       })
       .catch((err) => {
-        createError("RevizieTehnica update error");
+        console.log(err);
+        createError("Echipament update error");
       });
   };
   const onCreate = () => {
     apiClient
-      .post(`/api/ReviziiTehnice/create`, currentData)
+      .post(`/api/Echipamente/create`, currentData)
       .then((res) => {
         setData([...data, res.data.data]);
         setLoading(true);
         onCloseModal();
-        createToast("RevizieTehnica created succesufully");
+        createToast("Echipament created succesufully");
       })
       .catch((err) => {
         console.log(err);
-        createError("RevizieTehnica create error");
+        createError("Echipament create error");
       });
   };
 
   const onDelete = (index: number) => {
     apiClient
-      .delete(`/api/ReviziiTehnice/delete?id=${data[index].idEchipament}`)
+      .delete(`/api/Echipamente/delete?id=${data[index].idEchipament}`)
       .then((res) => {
         setData(data.filter((d, i) => i !== index));
         createToast("RevizieTehnica deleted succesufully");
@@ -118,7 +105,7 @@ export const ReviziiTehniceTable: React.FC = () => {
         console.log(err);
       });
   };
-  const onChange = (data: Partial<ReviziiTehniceInterface>) => {
+  const onChange = (data: Partial<EchipamenteInterface>) => {
     setCurrentData({ ...currentData, ...data });
   };
   useEffect(() => {
@@ -130,7 +117,7 @@ export const ReviziiTehniceTable: React.FC = () => {
       <VStack w="100%" h="100%">
         <HStack w="100%" justify="center" px={8} py={8}>
           <Box fontSize={40} fontWeight="bold" color="blue.800">
-            Table ReviziiTehnice
+            Table Echipamente
           </Box>
           <Spacer />
           <CDSModal
@@ -143,30 +130,29 @@ export const ReviziiTehniceTable: React.FC = () => {
             title="Create cadru medical"
           >
             <VStack w="100%" h="100%" justify={"flex-start"}>
-              <NameWrap title="Rezultat Revizie Tehnica">
+              <NameWrap title="Denumire Tehnica">
                 <CDSInput
-                  placeholder="Introduceti rezultat revizie tehnica"
-                  value={currentData.rezultatRevizie}
+                  placeholder="Introduceti denumirea tehnica"
+                  value={currentData.denumireTehnica}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ rezultatRevizie: e.target.value });
+                    onChange({ denumireTehnica: e.target.value });
                   }}
                 />
               </NameWrap>
 
-              <NameWrap title="Data Reviziei">
+              <NameWrap title="Data Cumpararii">
                 <CDSDatePicker
                   onChange={(date: string) => {
-                    onChange({ dataRevizie: date });
+                    onChange({ dataCumparare: date });
                   }}
-                  value={currentData.dataRevizie || ""}
+                  value={currentData.dataCumparare || ""}
                 />
               </NameWrap>
-              <NameWrap title="Id Echipament">
-                <CDSSearchSelect
-                  value={currentData.idEchipament}
-                  options={options}
-                  onChange={(value: number | undefined) => {
-                    onChange({ idEchipament: value });
+              <NameWrap title="Serie">
+                <CDSInput
+                  value={currentData.serie}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange({ serie: e.target.value });
                   }}
                 />
               </NameWrap>

@@ -3,7 +3,6 @@ import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { ErrorServiceContext } from "../../App";
 import { CDSDatePicker } from "../common/DatePicker/CDSDatePicker";
-import { useError } from "../common/ErrorService";
 
 import { CDSInput } from "../common/InputComponent";
 import { NameWrap } from "../common/NameWrap";
@@ -14,26 +13,25 @@ import {
 } from "../common/SearchSelect/CDSSearchSelect";
 import { CustomSpinner } from "../common/Spinner";
 import { EchipamenteInterface } from "../EchipamenteTable/types";
-import { FunctiiInterface } from "../FunctiiTable/types";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
-import { ReviziiTehniceInterface } from "./types";
+import { SaloaneInterface } from "./types";
 
-export const ReviziiTehniceTable: React.FC = () => {
+export const SaloaneTable: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { createError, createToast } = useContext(ErrorServiceContext);
   const [options, setOptions] = useState<SearchSelectInterface[]>([]);
-  const [data, setData] = useState<ReviziiTehniceInterface[]>([]);
+  const [data, setData] = useState<SaloaneInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [currentData, setCurrentData] = useState<ReviziiTehniceInterface>({
-    dataRevizie: moment().toString(),
-    rezultatRevizie: "",
-    idEchipament: 0,
+  const [currentData, setCurrentData] = useState<SaloaneInterface>({
+    oraInceput: 0,
+    oraSfarsit: 24,
+    suprafata: 0,
   });
   const getData = async () => {
     await apiClient
-      .get(`/api/ReviziiTehnice/get-all`)
+      .get(`/api/Saloane/get-all`)
       .then((res) => {
         setData(res.data.data);
         setLoading(true);
@@ -44,26 +42,13 @@ export const ReviziiTehniceTable: React.FC = () => {
         console.log(err);
         createError("Can't get data.");
       });
-    await apiClient
-      .get(`/api/Echipamente/get-all`)
-      .then((res) => {
-        setOptions(
-          res.data.data?.map((e: EchipamenteInterface) => {
-            return { value: e.idEchipament, label: e.denumireTehnica };
-          })
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-        createError("Can't get options.");
-      });
   };
   const onCloseModal = () => {
     onClose();
     setCurrentData({
-      dataRevizie: moment().toString(),
-      rezultatRevizie: "",
-      idEchipament: 0,
+      oraInceput: 0,
+      oraSfarsit: 24,
+      suprafata: 0,
     });
   };
   const onOpenUpdate = (index: number) => {
@@ -73,52 +58,48 @@ export const ReviziiTehniceTable: React.FC = () => {
 
   const onUpdate = () => {
     apiClient
-      .put(
-        `/api/ReviziiTehnice/update?id=${currentData.idRevizieTehnica}`,
-        currentData
-      )
+      .put(`/api/Saloane/update?id=${currentData.idSalon}`, currentData)
       .then((res) => {
         setData(
           data.map((d) => {
-            if (d.idRevizieTehnica === currentData.idRevizieTehnica)
-              return res.data.data;
+            if (d.idSalon === currentData.idSalon) return res.data.data;
             else return d;
           })
         );
-        createToast("RevizieTehnica updated succesufully");
+        createToast("Saloane updated succesufully");
       })
       .catch((err) => {
-        createError("RevizieTehnica update error");
+        createError("Saloane update error");
       });
   };
   const onCreate = () => {
     apiClient
-      .post(`/api/ReviziiTehnice/create`, currentData)
+      .post(`/api/Saloane/create`, currentData)
       .then((res) => {
         setData([...data, res.data.data]);
         setLoading(true);
         onCloseModal();
-        createToast("RevizieTehnica created succesufully");
+        createToast("Saloane created succesufully");
       })
       .catch((err) => {
         console.log(err);
-        createError("RevizieTehnica create error");
+        createError("Saloane create error");
       });
   };
 
   const onDelete = (index: number) => {
     apiClient
-      .delete(`/api/ReviziiTehnice/delete?id=${data[index].idEchipament}`)
+      .delete(`/api/Saloane/delete?id=${data[index].idSalon}`)
       .then((res) => {
         setData(data.filter((d, i) => i !== index));
-        createToast("RevizieTehnica deleted succesufully");
+        createToast("Saloane deleted succesufully");
       })
       .catch((err) => {
-        createError("RevizieTehnica delete error");
+        createError("Saloane delete error");
         console.log(err);
       });
   };
-  const onChange = (data: Partial<ReviziiTehniceInterface>) => {
+  const onChange = (data: Partial<SaloaneInterface>) => {
     setCurrentData({ ...currentData, ...data });
   };
   useEffect(() => {
@@ -130,7 +111,7 @@ export const ReviziiTehniceTable: React.FC = () => {
       <VStack w="100%" h="100%">
         <HStack w="100%" justify="center" px={8} py={8}>
           <Box fontSize={40} fontWeight="bold" color="blue.800">
-            Table ReviziiTehnice
+            Table Saloane
           </Box>
           <Spacer />
           <CDSModal
@@ -140,33 +121,33 @@ export const ReviziiTehniceTable: React.FC = () => {
             onClose={onCloseModal}
             onCreate={onCreate}
             onUpdate={onUpdate}
-            title="Create cadru medical"
+            title="Create salon"
           >
             <VStack w="100%" h="100%" justify={"flex-start"}>
-              <NameWrap title="Rezultat Revizie Tehnica">
+              <NameWrap title="Ora Inceput">
                 <CDSInput
-                  placeholder="Introduceti rezultat revizie tehnica"
-                  value={currentData.rezultatRevizie}
+                  placeholder="Introduceti ora de inceput"
+                  value={currentData.oraInceput.toString()}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ rezultatRevizie: e.target.value });
+                    onChange({ oraInceput: parseInt(e.target.value) });
                   }}
                 />
               </NameWrap>
-
-              <NameWrap title="Data Reviziei">
-                <CDSDatePicker
-                  onChange={(date: string) => {
-                    onChange({ dataRevizie: date });
+              <NameWrap title="Ora Sfarsit">
+                <CDSInput
+                  placeholder="Introduceti ora de inceput"
+                  value={currentData.oraSfarsit.toString()}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange({ oraSfarsit: parseInt(e.target.value) });
                   }}
-                  value={currentData.dataRevizie || ""}
                 />
               </NameWrap>
-              <NameWrap title="Id Echipament">
-                <CDSSearchSelect
-                  value={currentData.idEchipament}
-                  options={options}
-                  onChange={(value: number | undefined) => {
-                    onChange({ idEchipament: value });
+              <NameWrap title="suprafata">
+                <CDSInput
+                  placeholder="Introduceti suprafata"
+                  value={currentData.suprafata.toString()}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange({ suprafata: parseInt(e.target.value) });
                   }}
                 />
               </NameWrap>

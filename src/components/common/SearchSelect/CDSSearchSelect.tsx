@@ -47,6 +47,7 @@ export const CDSSearchSelect: React.FC<CDSSearchProps> = (
 
   useEffect(() => {
     handleChange(options.filter((opt) => opt.value === value)[0] ?? null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const customStyles = {
