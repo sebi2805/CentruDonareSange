@@ -1,4 +1,5 @@
 import { Box, HStack, Spacer, useDisclosure, VStack } from "@chakra-ui/react";
+import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { ErrorServiceContext } from "../../App";
 import { CDSDatePicker } from "../common/DatePicker/CDSDatePicker";
@@ -11,26 +12,32 @@ import {
   SearchSelectInterface,
 } from "../common/SearchSelect/CDSSearchSelect";
 import { CustomSpinner } from "../common/Spinner";
-import { FunctiiInterface } from "../FunctiiTable/types";
+import { EchipamenteInterface } from "../EchipamenteTable/types";
+import { GrupeSangeInterface } from "../GrupeSangeTable/types";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
-import { CadreMedicaleInterface } from "./types";
-export const CadreMedicaleTable: React.FC = () => {
+import { DonatoriInterface } from "./types";
+
+export const DonatoriTable: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { createError, createToast } = useContext(ErrorServiceContext);
   const [options, setOptions] = useState<SearchSelectInterface[]>([]);
-  const [data, setData] = useState<CadreMedicaleInterface[]>([]);
+  const [data, setData] = useState<DonatoriInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [currentData, setCurrentData] = useState<CadreMedicaleInterface>({
+  const [currentData, setCurrentData] = useState<DonatoriInterface>({
     nume: "",
     prenume: "",
-    dataAngajarii: "",
-    idFunctie: 0,
+    dataNasterii: "",
+    inaltime: 0,
+    greutate: 0,
+    idGrupaSange: 0,
+    cnp: "",
+    sex: "",
   });
   const getData = async () => {
     await apiClient
-      .get(`/api/CadreMedicale/get-all`)
+      .get(`/api/Donatori/get-all`)
       .then((res) => {
         setData(res.data.data);
         setLoading(true);
@@ -42,11 +49,11 @@ export const CadreMedicaleTable: React.FC = () => {
         createError("Can't get data.");
       });
     await apiClient
-      .get(`/api/Functii/get-all`)
+      .get(`/api/GrupeSange/get-all`)
       .then((res) => {
         setOptions(
-          res.data.data?.map((f: FunctiiInterface) => {
-            return { value: f.idFunctie, label: f.denumire };
+          res.data.data?.map((e: GrupeSangeInterface) => {
+            return { value: e.idGrupaSange, label: e.denumire };
           })
         );
       })
@@ -57,7 +64,16 @@ export const CadreMedicaleTable: React.FC = () => {
   };
   const onCloseModal = () => {
     onClose();
-    setCurrentData({ nume: "", prenume: "", dataAngajarii: "", idFunctie: 0 });
+    setCurrentData({
+      nume: "",
+      prenume: "",
+      dataNasterii: "",
+      inaltime: 0,
+      greutate: 0,
+      idGrupaSange: 0,
+      cnp: "",
+      sex: "",
+    });
   };
   const onOpenUpdate = (index: number) => {
     onOpen();
@@ -66,66 +82,63 @@ export const CadreMedicaleTable: React.FC = () => {
 
   const onUpdate = () => {
     apiClient
-      .put(
-        `/api/CadreMedicale/update?id=${currentData.idCadruMedical}`,
-        currentData
-      )
+      .put(`/api/Donatori/update?id=${currentData.idDonator}`, currentData)
       .then((res) => {
-        console.log(res.data.data);
         setData(
           data.map((d) => {
-            if (d.idCadruMedical === currentData.idCadruMedical)
-              return res.data.data;
+            if (d.idDonator === currentData.idDonator) return res.data.data;
             else return d;
           })
         );
-        createToast("CadruMedical updated succesufully");
+        createToast("Donator updated succesufully");
       })
       .catch((err) => {
-        console.log(err);
-        createError("CadruMedical update error");
+        createError("Donator update error");
       });
   };
   const onCreate = () => {
     apiClient
-      .post(`/api/CadreMedicale/create`, currentData)
+      .post(`/api/Donatori/create`, currentData)
       .then((res) => {
         setData([...data, res.data.data]);
         setLoading(true);
         onCloseModal();
-        createToast("CadruMedical created succesufully");
+        createToast("Donator created succesufully");
       })
       .catch((err) => {
         console.log(err);
-        createError("CadruMedical create error");
+        createError("Donator create error");
       });
   };
 
   const onDelete = (index: number) => {
     apiClient
-      .delete(`/api/CadreMedicale/delete?id=${data[index].idCadruMedical}`)
+      .delete(`/api/Donatori/delete?id=${data[index].idDonator}`)
       .then((res) => {
         setData(data.filter((d, i) => i !== index));
-        createToast("CadruMedical deleted succesufully");
+        createToast("Donator deleted succesufully");
       })
       .catch((err) => {
-        createError("CadruMedical delete error");
+        createError("Donator delete error");
         console.log(err);
       });
   };
-  const onChange = (data: Partial<CadreMedicaleInterface>) => {
+  const onChange = (data: Partial<DonatoriInterface>) => {
     setCurrentData({ ...currentData, ...data });
   };
   useEffect(() => {
     getData();
   }, []);
-
+  const optionsSex: SearchSelectInterface[] = [
+    { value: "masculin", label: "masculin" },
+    { value: "feminin", label: "feminin" },
+  ];
   return (
     <>
       <VStack w="100%" h="100%">
         <HStack w="100%" justify="center" px={8} py={8}>
           <Box fontSize={40} fontWeight="bold" color="blue.800">
-            Table CadreMedicale
+            Table ReviziiTehnice
           </Box>
           <Spacer />
           <CDSModal
@@ -156,21 +169,60 @@ export const CadreMedicaleTable: React.FC = () => {
                   }}
                 />
               </NameWrap>
-              <NameWrap title="Data Angajarii">
+              <NameWrap title="Data Nasterii">
                 <CDSDatePicker
                   onChange={(date: string) => {
-                    onChange({ dataAngajarii: date });
+                    onChange({ dataNasterii: date });
                   }}
-                  value={currentData.dataAngajarii}
+                  value={currentData.dataNasterii || ""}
                 />
               </NameWrap>
-              <NameWrap title="Id Functie">
+
+              <NameWrap title="Inaltime">
+                <CDSInput
+                  placeholder="Introduceti inaltime"
+                  value={currentData.inaltime.toString()}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange({ inaltime: parseInt(e.target.value) });
+                  }}
+                />
+              </NameWrap>
+              <NameWrap title="Greutate">
+                <CDSInput
+                  placeholder="Introduceti greutate"
+                  value={currentData.greutate.toString()}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange({ greutate: parseInt(e.target.value) });
+                  }}
+                />
+              </NameWrap>
+              <NameWrap title="CNP">
+                <CDSInput
+                  placeholder="Introduceti CNP"
+                  value={currentData.cnp}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange({ cnp: e.target.value });
+                  }}
+                />
+              </NameWrap>
+              <NameWrap title="Sex">
                 <CDSSearchSelect
-                  value={currentData.idFunctie}
+                  value={currentData.sex}
+                  options={optionsSex}
+                  onChange={(value: number | undefined | string) => {
+                    onChange({
+                      sex: typeof value === "string" ? value : "",
+                    });
+                  }}
+                />
+              </NameWrap>
+              <NameWrap title="Id Grupa Sange">
+                <CDSSearchSelect
+                  value={currentData.idGrupaSange}
                   options={options}
                   onChange={(value: number | undefined | string) => {
                     onChange({
-                      idFunctie: typeof value === "number" ? value : 0,
+                      idGrupaSange: typeof value === "number" ? value : 0,
                     });
                   }}
                 />

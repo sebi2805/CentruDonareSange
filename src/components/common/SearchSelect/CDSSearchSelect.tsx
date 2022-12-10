@@ -9,14 +9,14 @@ import {
 import { theme } from "../../../theme";
 import { CustomOption } from "./CDSMultiSelect";
 export interface SearchSelectInterface {
-  value: number;
+  value: number | string;
   label: string;
 }
 interface CDSSearchProps extends Omit<StateManagedSelect, "onChange"> {
-  onChange: (val: number | undefined) => void;
+  onChange: (val: number | undefined | string) => void;
   error?: string;
   options: SearchSelectInterface[];
-  value?: number;
+  value?: number | string;
   placeholder?: string;
   isDisabled?: boolean;
 }

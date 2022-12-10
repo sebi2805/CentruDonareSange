@@ -13,43 +13,52 @@ import {
   SearchSelectInterface,
 } from "../common/SearchSelect/CDSSearchSelect";
 import { CustomSpinner } from "../common/Spinner";
+import { DonatiiInterface } from "../DonatiiTable/types";
 import { EchipamenteInterface } from "../EchipamenteTable/types";
 import { FunctiiInterface } from "../FunctiiTable/types";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
-import { ReviziiTehniceInterface } from "./types";
+import { TesteInterface } from "./types";
 
-export const ReviziiTehniceTable: React.FC = () => {
+export const TesteTable: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { createError, createToast } = useContext(ErrorServiceContext);
   const [options, setOptions] = useState<SearchSelectInterface[]>([]);
-  const [data, setData] = useState<ReviziiTehniceInterface[]>([]);
+  const [data, setData] = useState<TesteInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [currentData, setCurrentData] = useState<ReviziiTehniceInterface>({
-    dataRevizie: moment().toString(),
-    rezultatRevizie: "",
-    idEchipament: 0,
+  const [currentData, setCurrentData] = useState<TesteInterface>({
+    hcv: "",
+    hiv: "",
+    verificareGrupajulSanguin: "",
+    diabet: "",
+    idDonatie: 0,
   });
+  const optionsNegativPozitiv: SearchSelectInterface[] = [
+    { label: "pozitiv", value: "pozitiv" },
+    { label: "negativ", value: "negativ" },
+  ];
   const getData = async () => {
     await apiClient
-      .get(`/api/ReviziiTehnice/get-all`)
+      .get(`/api/Teste/get-all`)
       .then((res) => {
         setData(res.data.data);
         setLoading(true);
-
         createToast("Succes");
       })
       .catch((err) => {
         console.log(err);
         createError("Can't get data.");
       });
+    await getDonatiiWithoutTest();
+  };
+  const getDonatiiWithoutTest = async () => {
     await apiClient
-      .get(`/api/Echipamente/get-all`)
+      .get(`/api/Donatii/getDonatiiWithoutTest`)
       .then((res) => {
         setOptions(
-          res.data.data?.map((e: EchipamenteInterface) => {
-            return { value: e.idEchipament, label: e.denumireTehnica };
+          res.data.data?.map((d: DonatiiInterface) => {
+            return { value: d.idDonatie, label: d.idDonatie };
           })
         );
       })
@@ -61,64 +70,66 @@ export const ReviziiTehniceTable: React.FC = () => {
   const onCloseModal = () => {
     onClose();
     setCurrentData({
-      dataRevizie: moment().toString(),
-      rezultatRevizie: "",
-      idEchipament: 0,
+      hcv: "",
+      hiv: "",
+      verificareGrupajulSanguin: "",
+      diabet: "",
+      idDonatie: 0,
     });
   };
   const onOpenUpdate = (index: number) => {
     onOpen();
+    console.log({ ...data[index], isEdit: true, index: index });
+
     setCurrentData({ ...data[index], isEdit: true, index: index });
   };
 
   const onUpdate = () => {
     apiClient
-      .put(
-        `/api/ReviziiTehnice/update?id=${currentData.idRevizieTehnica}`,
-        currentData
-      )
+      .put(`/api/Teste/update?id=${currentData.idTest}`, currentData)
       .then((res) => {
         setData(
           data.map((d) => {
-            if (d.idRevizieTehnica === currentData.idRevizieTehnica)
-              return res.data.data;
+            if (d.idTest === currentData.idTest) return res.data.data;
             else return d;
           })
         );
-        createToast("RevizieTehnica updated succesufully");
+        getDonatiiWithoutTest();
+        createToast("Test updated succesufully");
       })
       .catch((err) => {
-        createError("RevizieTehnica update error");
+        createError("Test update error");
       });
   };
   const onCreate = () => {
     apiClient
-      .post(`/api/ReviziiTehnice/create`, currentData)
+      .post(`/api/Teste/create`, currentData)
       .then((res) => {
         setData([...data, res.data.data]);
         setLoading(true);
         onCloseModal();
-        createToast("RevizieTehnica created succesufully");
+        getDonatiiWithoutTest();
+        createToast("Test created succesufully");
       })
       .catch((err) => {
         console.log(err);
-        createError("RevizieTehnica create error");
+        createError("Test create error");
       });
   };
 
   const onDelete = (index: number) => {
     apiClient
-      .delete(`/api/ReviziiTehnice/delete?id=${data[index].idEchipament}`)
+      .delete(`/api/Teste/delete?id=${data[index].idTest}`)
       .then((res) => {
         setData(data.filter((d, i) => i !== index));
-        createToast("RevizieTehnica deleted succesufully");
+        createToast("Test deleted succesufully");
       })
       .catch((err) => {
-        createError("RevizieTehnica delete error");
+        createError("Test delete error");
         console.log(err);
       });
   };
-  const onChange = (data: Partial<ReviziiTehniceInterface>) => {
+  const onChange = (data: Partial<TesteInterface>) => {
     setCurrentData({ ...currentData, ...data });
   };
   useEffect(() => {
@@ -130,7 +141,7 @@ export const ReviziiTehniceTable: React.FC = () => {
       <VStack w="100%" h="100%">
         <HStack w="100%" justify="center" px={8} py={8}>
           <Box fontSize={40} fontWeight="bold" color="blue.800">
-            Table ReviziiTehnice
+            Table Teste
           </Box>
           <Spacer />
           <CDSModal
@@ -140,34 +151,64 @@ export const ReviziiTehniceTable: React.FC = () => {
             onClose={onCloseModal}
             onCreate={onCreate}
             onUpdate={onUpdate}
-            title="Create cadru medical"
+            title="Create test"
           >
             <VStack w="100%" h="100%" justify={"flex-start"}>
-              <NameWrap title="Rezultat Revizie Tehnica">
-                <CDSInput
-                  placeholder="Introduceti rezultat revizie tehnica"
-                  value={currentData.rezultatRevizie}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ rezultatRevizie: e.target.value });
+              <NameWrap title="Rezultat HIV">
+                <CDSSearchSelect
+                  options={optionsNegativPozitiv}
+                  placeholder="Introduceti HIV"
+                  value={currentData.hiv}
+                  onChange={(value: string | number | undefined) => {
+                    onChange({ hiv: typeof value === "string" ? value : "" });
                   }}
                 />
               </NameWrap>
 
-              <NameWrap title="Data Reviziei">
-                <CDSDatePicker
-                  onChange={(date: string) => {
-                    onChange({ dataRevizie: date });
+              <NameWrap title="Rezultat HCV">
+                <CDSSearchSelect
+                  options={optionsNegativPozitiv}
+                  placeholder="Introduceti rezultat revizie tehnica"
+                  value={currentData.hcv}
+                  onChange={(value: string | number | undefined) => {
+                    onChange({ hcv: typeof value === "string" ? value : "" });
                   }}
-                  value={currentData.dataRevizie || ""}
                 />
               </NameWrap>
-              <NameWrap title="Id Echipament">
+
+              <NameWrap title="Rezultat diabet">
                 <CDSSearchSelect
-                  value={currentData.idEchipament}
-                  options={options}
-                  onChange={(value: number | undefined | string) => {
+                  options={optionsNegativPozitiv}
+                  placeholder="Introduceti rezultat diabet"
+                  value={currentData.diabet}
+                  onChange={(value: string | number | undefined) => {
                     onChange({
-                      idEchipament: typeof value === "number" ? value : 0,
+                      diabet: typeof value === "string" ? value : "",
+                    });
+                  }}
+                />
+              </NameWrap>
+              <NameWrap title="Rezultat Verificare Grupajul Sanguin">
+                <CDSSearchSelect
+                  options={optionsNegativPozitiv}
+                  placeholder="Introduceti rezultat verificare grupajul sanguin"
+                  value={currentData.hiv}
+                  onChange={(value: string | number | undefined) => {
+                    onChange({
+                      verificareGrupajulSanguin:
+                        typeof value === "string" ? value : "",
+                    });
+                  }}
+                />
+              </NameWrap>
+              <NameWrap title="Donatie">
+                <CDSSearchSelect
+                  options={options}
+                  placeholder="Introduceti donatia"
+                  value={currentData.idDonatie.toString()}
+                  onChange={(value: string | number | undefined) => {
+                    onChange({
+                      idDonatie: typeof value === "number" ? value : 0,
                     });
                   }}
                 />
