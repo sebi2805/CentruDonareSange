@@ -1,11 +1,7 @@
 import { Box, HStack, Spacer, useDisclosure, VStack } from "@chakra-ui/react";
-import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { ErrorServiceContext } from "../../App";
-import { CDSDatePicker } from "../common/DatePicker/CDSDatePicker";
-import { useError } from "../common/ErrorService";
 
-import { CDSInput } from "../common/InputComponent";
 import { NameWrap } from "../common/NameWrap";
 
 import {
@@ -14,8 +10,6 @@ import {
 } from "../common/SearchSelect/CDSSearchSelect";
 import { CustomSpinner } from "../common/Spinner";
 import { DonatiiInterface } from "../DonatiiTable/types";
-import { EchipamenteInterface } from "../EchipamenteTable/types";
-import { FunctiiInterface } from "../FunctiiTable/types";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
@@ -38,6 +32,19 @@ export const TesteTable: React.FC = () => {
     { label: "pozitiv", value: "pozitiv" },
     { label: "negativ", value: "negativ" },
   ];
+  const onSort = async (index: number) => {
+    await apiClient
+      .get(`/api/Donatii/get-all?order=${index}`)
+      .then((res) => {
+        setData(res.data.data);
+        setLoading(true);
+        createToast("Succes");
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get data.");
+      });
+  };
   const getData = async () => {
     await apiClient
       .get(`/api/Teste/get-all`)
@@ -134,6 +141,7 @@ export const TesteTable: React.FC = () => {
   };
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -218,6 +226,7 @@ export const TesteTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            onSort={onSort}
             tableData={data}
             onDelete={onDelete}
             onUpdate={onOpenUpdate}

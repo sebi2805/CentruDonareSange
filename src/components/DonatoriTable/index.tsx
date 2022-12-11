@@ -1,5 +1,4 @@
 import { Box, HStack, Spacer, useDisclosure, VStack } from "@chakra-ui/react";
-import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { ErrorServiceContext } from "../../App";
 import { CDSDatePicker } from "../common/DatePicker/CDSDatePicker";
@@ -12,7 +11,6 @@ import {
   SearchSelectInterface,
 } from "../common/SearchSelect/CDSSearchSelect";
 import { CustomSpinner } from "../common/Spinner";
-import { EchipamenteInterface } from "../EchipamenteTable/types";
 import { GrupeSangeInterface } from "../GrupeSangeTable/types";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
@@ -35,6 +33,19 @@ export const DonatoriTable: React.FC = () => {
     cnp: "",
     sex: "",
   });
+  const onSort = async (index: number) => {
+    await apiClient
+      .get(`/api/Donatori/get-all?order=${index}`)
+      .then((res) => {
+        setData(res.data.data);
+        setLoading(true);
+        createToast("Succes");
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get data.");
+      });
+  };
   const getData = async () => {
     await apiClient
       .get(`/api/Donatori/get-all`)
@@ -128,6 +139,7 @@ export const DonatoriTable: React.FC = () => {
   };
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const optionsSex: SearchSelectInterface[] = [
     { value: "masculin", label: "masculin" },
@@ -232,6 +244,7 @@ export const DonatoriTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            onSort={onSort}
             tableData={data}
             onDelete={onDelete}
             onUpdate={onOpenUpdate}

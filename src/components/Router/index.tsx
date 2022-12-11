@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { CadreMedicaleTable } from "../CadreMedicaleTable";
+import { DashboardWrapper } from "../DashboardWrapper";
 import { DonatiiTable } from "../DonatiiTable";
 import { DonatoriTable } from "../DonatoriTable";
 import { EchipamentTable } from "../EchipamenteTable";
@@ -13,16 +14,86 @@ import { TesteTable } from "../TesteTable";
 export const RoutesComponent: React.FC = () => {
   return (
     <Routes>
-      <Route path="/functii" element={<FunctiiTable />} />
-      <Route path="/cadremedicale" element={<CadreMedicaleTable />} />
-      <Route path="/reviziitehnice" element={<ReviziiTehniceTable />} />
-      <Route path="/echipamente" element={<EchipamentTable />} />
-      <Route path="/saloane" element={<SaloaneTable />} />
-      <Route path="/teste" element={<TesteTable />} />
-      <Route path="/recipiente" element={<RecipienteTable />} />
-      <Route path="/donatii" element={<DonatiiTable />} />
-      <Route path="/donatori" element={<DonatoriTable />} />
-      <Route path="/grupesange" element={<GrupeSangeTable />} />
+      <Route
+        path="/functii"
+        element={
+          <DashboardWrapper>
+            <FunctiiTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/cadremedicale"
+        element={
+          <DashboardWrapper>
+            <CadreMedicaleTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/reviziitehnice"
+        element={
+          <DashboardWrapper>
+            <ReviziiTehniceTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/echipamente"
+        element={
+          <DashboardWrapper>
+            <EchipamentTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/saloane"
+        element={
+          <DashboardWrapper>
+            <SaloaneTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/teste"
+        element={
+          <DashboardWrapper>
+            <TesteTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/recipiente"
+        element={
+          <DashboardWrapper>
+            <RecipienteTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/donatii"
+        element={
+          <DashboardWrapper>
+            <DonatiiTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/donatori"
+        element={
+          <DashboardWrapper>
+            <DonatoriTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/grupesange"
+        element={
+          <DashboardWrapper>
+            <GrupeSangeTable />
+          </DashboardWrapper>
+        }
+      />
     </Routes>
   );
 };

@@ -5,7 +5,6 @@ import { ErrorServiceContext } from "../../App";
 import { CadreMedicaleInterface } from "../CadreMedicaleTable/types";
 import { CDSDatePicker } from "../common/DatePicker/CDSDatePicker";
 
-import { CDSInput } from "../common/InputComponent";
 import { NameWrap } from "../common/NameWrap";
 
 import {
@@ -14,7 +13,6 @@ import {
 } from "../common/SearchSelect/CDSSearchSelect";
 import { CustomSpinner } from "../common/Spinner";
 import { DonatoriInterface } from "../DonatoriTable/types";
-import { GrupeSangeInterface } from "../GrupeSangeTable/types";
 import { CDSModal } from "../ModalComponent";
 import { RecipienteInterface } from "../RecipienteTable/types";
 import { SaloaneInterface } from "../SaloaneTable/types";
@@ -46,6 +44,19 @@ export const DonatiiTable: React.FC = () => {
     anRecoltare: "",
     dataRecoltare: "",
   });
+  const onSort = async (index: number) => {
+    await apiClient
+      .get(`/api/Donatii/get-all?order=${index}`)
+      .then((res) => {
+        setData(res.data.data);
+        setLoading(true);
+        createToast("Succes");
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get data.");
+      });
+  };
   const getData = async () => {
     await apiClient
       .get(`/api/Donatii/get-all`)
@@ -185,6 +196,7 @@ export const DonatiiTable: React.FC = () => {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -279,6 +291,7 @@ export const DonatiiTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            onSort={onSort}
             tableData={data}
             onDelete={onDelete}
             onUpdate={onOpenUpdate}

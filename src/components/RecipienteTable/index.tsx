@@ -1,20 +1,11 @@
 import { Box, HStack, Spacer, useDisclosure, VStack } from "@chakra-ui/react";
-import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { ErrorServiceContext } from "../../App";
-import { CDSDatePicker } from "../common/DatePicker/CDSDatePicker";
-import { useError } from "../common/ErrorService";
 
 import { CDSInput } from "../common/InputComponent";
 import { NameWrap } from "../common/NameWrap";
 
-import {
-  CDSSearchSelect,
-  SearchSelectInterface,
-} from "../common/SearchSelect/CDSSearchSelect";
 import { CustomSpinner } from "../common/Spinner";
-import { EchipamenteInterface } from "../EchipamenteTable/types";
-import { FunctiiInterface } from "../FunctiiTable/types";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
@@ -23,7 +14,7 @@ import { RecipienteInterface } from "./types";
 export const RecipienteTable: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { createError, createToast } = useContext(ErrorServiceContext);
-  const [options, setOptions] = useState<SearchSelectInterface[]>([]);
+
   const [data, setData] = useState<RecipienteInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<RecipienteInterface>({
@@ -32,6 +23,19 @@ export const RecipienteTable: React.FC = () => {
     temperaturaInceput: 0,
     temperaturaSfarsit: 0,
   });
+  const onSort = async (index: number) => {
+    await apiClient
+      .get(`/api/Recipiente/get-all?order=${index}`)
+      .then((res) => {
+        setData(res.data.data);
+        setLoading(true);
+        createToast("Succes");
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get data.");
+      });
+  };
   const getData = async () => {
     await apiClient
       .get(`/api/Recipiente/get-all`)
@@ -108,6 +112,7 @@ export const RecipienteTable: React.FC = () => {
   };
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -169,6 +174,7 @@ export const RecipienteTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            onSort={onSort}
             tableData={data}
             onDelete={onDelete}
             onUpdate={onOpenUpdate}

@@ -3,7 +3,6 @@ import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { ErrorServiceContext } from "../../App";
 import { CDSDatePicker } from "../common/DatePicker/CDSDatePicker";
-import { useError } from "../common/ErrorService";
 
 import { CDSInput } from "../common/InputComponent";
 import { NameWrap } from "../common/NameWrap";
@@ -14,7 +13,6 @@ import {
 } from "../common/SearchSelect/CDSSearchSelect";
 import { CustomSpinner } from "../common/Spinner";
 import { EchipamenteInterface } from "../EchipamenteTable/types";
-import { FunctiiInterface } from "../FunctiiTable/types";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
@@ -31,6 +29,19 @@ export const ReviziiTehniceTable: React.FC = () => {
     rezultatRevizie: "",
     idEchipament: 0,
   });
+  const onSort = async (index: number) => {
+    await apiClient
+      .get(`/api/ReviziiTehnice/get-all?order=${index}`)
+      .then((res) => {
+        setData(res.data.data);
+        setLoading(true);
+        createToast("Succes");
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get data.");
+      });
+  };
   const getData = async () => {
     await apiClient
       .get(`/api/ReviziiTehnice/get-all`)
@@ -123,6 +134,7 @@ export const ReviziiTehniceTable: React.FC = () => {
   };
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -177,6 +189,7 @@ export const ReviziiTehniceTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            onSort={onSort}
             tableData={data}
             onDelete={onDelete}
             onUpdate={onOpenUpdate}

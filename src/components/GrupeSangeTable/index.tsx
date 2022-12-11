@@ -5,12 +5,7 @@ import { CDSInput } from "../common/InputComponent";
 
 import { NameWrap } from "../common/NameWrap";
 
-import {
-  CDSSearchSelect,
-  SearchSelectInterface,
-} from "../common/SearchSelect/CDSSearchSelect";
 import { CustomSpinner } from "../common/Spinner";
-import { DonatiiInterface } from "../DonatiiTable/types";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
@@ -19,7 +14,7 @@ import { GrupeSangeInterface } from "./types";
 export const GrupeSangeTable: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { createError, createToast } = useContext(ErrorServiceContext);
-  const [options, setOptions] = useState<SearchSelectInterface[]>([]);
+
   const [data, setData] = useState<GrupeSangeInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<GrupeSangeInterface>({
@@ -27,7 +22,19 @@ export const GrupeSangeTable: React.FC = () => {
     antigene: "",
     anticorpi: "",
   });
-
+  const onSort = async (index: number) => {
+    await apiClient
+      .get(`/api/GrupeSange/get-all?order=${index}`)
+      .then((res) => {
+        setData(res.data.data);
+        setLoading(true);
+        createToast("Succes");
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get data.");
+      });
+  };
   const getData = async () => {
     await apiClient
       .get(`/api/GrupeSange/get-all`)
@@ -108,6 +115,7 @@ export const GrupeSangeTable: React.FC = () => {
   };
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -162,6 +170,7 @@ export const GrupeSangeTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            onSort={onSort}
             tableData={data}
             onDelete={onDelete}
             onUpdate={onOpenUpdate}

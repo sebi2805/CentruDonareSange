@@ -18,6 +18,19 @@ export const FunctiiTable: React.FC = () => {
     denumire: "",
     salariuBaza: 0,
   });
+  const onSort = async (index: number) => {
+    await apiClient
+      .get(`/api/Functii/get-all?order=${index}`)
+      .then((res) => {
+        setData(res.data.data);
+        setLoading(true);
+        createToast("Succes");
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get data.");
+      });
+  };
   const getData = async () => {
     await apiClient
       .get(`/api/Functii/get-all`)
@@ -130,6 +143,7 @@ export const FunctiiTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            onSort={onSort}
             tableData={data}
             onDelete={onDelete}
             onUpdate={onOpenUpdate}

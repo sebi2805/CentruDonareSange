@@ -55,6 +55,21 @@ export const CadreMedicaleTable: React.FC = () => {
         createError("Can't get options.");
       });
   };
+  const onSort = async (index: number) => {
+    await apiClient
+      .get(`/api/CadreMedicale/get-all?order=${index}`)
+      .then((res) => {
+        setData(res.data.data);
+        setLoading(true);
+        console.log(res.data.data);
+
+        createToast("Succes");
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get data.");
+      });
+  };
   const onCloseModal = () => {
     onClose();
     setCurrentData({ nume: "", prenume: "", dataAngajarii: "", idFunctie: 0 });
@@ -118,11 +133,12 @@ export const CadreMedicaleTable: React.FC = () => {
   };
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <VStack w="100%" h="100%">
+      <VStack w="100%">
         <HStack w="100%" justify="center" px={8} py={8}>
           <Box fontSize={40} fontWeight="bold" color="blue.800">
             Table CadreMedicale
@@ -180,6 +196,7 @@ export const CadreMedicaleTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            onSort={onSort}
             tableData={data}
             onDelete={onDelete}
             onUpdate={onOpenUpdate}

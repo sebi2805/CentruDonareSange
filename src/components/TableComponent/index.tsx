@@ -8,20 +8,40 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { TableRow } from "./TableRow";
 
 interface CDSTableProps {
   tableData: any[];
   onUpdate: (index: number) => void;
   onDelete: (index: number) => void;
+  onSort: (index: number) => void;
 }
 
 export const CDSTable: React.FC<CDSTableProps> = ({
   tableData,
   onDelete,
   onUpdate,
+  onSort,
 }) => {
+  const [sortValue, setSortValue] = useState<number>(0);
+  const [ascending, setAscending] = useState<boolean>(true);
+  const onSortInternal = (index: number) => {
+    if (index === sortValue) {
+      if (ascending) {
+        setAscending(false);
+        if (onSort) onSort((index + 1) * 2 - 1);
+      } // because 2*1 -1 =1 => asc on first attribute
+      else {
+        setAscending(true);
+        if (onSort) onSort((index + 1) * 2);
+      }
+    } else {
+      setAscending(false);
+      setSortValue(index);
+      if (onSort) onSort((index + 1) * 2 - 1);
+    }
+  };
   return (
     <VStack w="100%" h="100%" align={"flex-start"} justify="flex-start">
       <TableContainer w="100%" h="100%" px={4}>
@@ -38,7 +58,12 @@ export const CDSTable: React.FC<CDSTableProps> = ({
               </Th>
               {Object.keys(tableData[0])?.map((k, i) => {
                 return (
-                  <Th key={k + i}>
+                  <Th
+                    key={k + i}
+                    onClick={() => {
+                      onSortInternal(i);
+                    }}
+                  >
                     <Flex
                       w="100%"
                       fontWeight={"bold"}
