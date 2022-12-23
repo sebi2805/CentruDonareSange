@@ -36,7 +36,10 @@ export const CDSConfirmDelete: React.FC<ConfirmDelete> = ({
     handleDelete(index, onClose);
   };
   const colorBg = useColorModeValue("white", "darkThemeGrey.600");
-  const colorBgHover = useColorModeValue("blue.100", "darkThemeGrey.500");
+  const colorBgHover = useColorModeValue(
+    "darkThemeGrey.600",
+    "darkThemeGrey.500"
+  );
   return (
     <Box
       w="100%"

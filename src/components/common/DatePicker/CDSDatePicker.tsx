@@ -41,11 +41,14 @@ export const CDSDatePicker: React.FC<CDSDatePickerInterface> = (props) => {
       <Input
         placeholder="Select Date and Time..."
         size={"lg"}
+        color="white"
         type="date"
         borderWidth={1}
         borderRadius={4}
         borderColor={errorDate || error ? "gray.300" : "danger.500"}
-        focusBorderColor={errorDate && error ? "danger.500" : "blue.800"}
+        focusBorderColor={
+          errorDate && error ? "danger.500" : "darkThemeGrey.100"
+        }
         {...others}
         value={moment(value).format("YYYY-MM-DD")}
         onChange={dateChangeHandler}

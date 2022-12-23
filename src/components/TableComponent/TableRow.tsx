@@ -29,7 +29,7 @@ export const TableRow: React.FC<TableRowProps> = ({
     onClose();
   };
   return (
-    <Tr fontWeight={500} color="blue.700" fontSize={16}>
+    <Tr fontWeight={500} color="darkThemeGrey.700" fontSize={16}>
       <Td borderRight="1px solid" borderRightColor="neutralGrey" isNumeric>
         {index + "."}
       </Td>
@@ -53,7 +53,7 @@ export const TableRow: React.FC<TableRowProps> = ({
             icon={<Options stroke={theme.colors.blue[700]} />}
             variant="outline"
           />
-          <MenuList bg={"blue.100"}>
+          <MenuList bg={"darkThemeGrey.600"}>
             <CDSConfirmDelete handleDelete={confirmDelete} index={index}>
               <MenuItem
                 color={"danger.500"}

@@ -7,7 +7,7 @@ interface NameWrapProps {
 export const NameWrap: React.FC<NameWrapProps> = ({ title, children }) => {
   return (
     <VStack w="100%" align={"flex-start"} justify="flex-start">
-      <Box fontSize={20} fontWeight={500} color="blue.700">
+      <Box fontSize={20} fontWeight={500} color="darkThemeGrey.100">
         {title}
       </Box>
       {children}

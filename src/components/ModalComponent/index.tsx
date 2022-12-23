@@ -35,7 +35,7 @@ export const CDSModal: React.FC<CDSModalProps> = ({
   return (
     <>
       <Button
-        bg="blue.700"
+        bg="blue.400"
         color="white"
         fontSize={24}
         fontWeight={600}
@@ -50,14 +50,17 @@ export const CDSModal: React.FC<CDSModalProps> = ({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader bg="blue.100">{title}</ModalHeader>
+          <ModalHeader bg="darkThemeGrey.700" color="white">
+            {title}
+          </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>{children}</ModalBody>
-          <ModalFooter bg="blue.100">
+          <ModalBody bg="darkThemeGrey.600">{children}</ModalBody>
+          <ModalFooter bg="darkThemeGrey.600">
             <HStack justify={"flex-end"} w="100%">
               <Button
                 color="white"
-                bg="blue.700"
+                colorScheme={"blue"}
+                bg="blue.400"
                 onClick={() => {
                   data.isEdit ? onUpdate(data.index) : onCreate();
                 }}

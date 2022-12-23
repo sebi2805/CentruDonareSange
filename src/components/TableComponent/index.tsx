@@ -55,7 +55,7 @@ export const CDSTable: React.FC<CDSTableProps> = ({
           border="2px solid"
           borderColor="neutralGrey"
         >
-          <Thead bg="blue.100" color="blue.700">
+          <Thead bg="darkThemeGrey.600" color="darkThemeGrey.700">
             <Tr>
               <Th fontWeight={"bold"} fontSize={16} isNumeric>
                 Index

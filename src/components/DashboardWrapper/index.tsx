@@ -16,10 +16,10 @@ export const DashboardWrapper: React.FC<DashboardWrapperProps> = ({
           h={20}
           align="center"
           justify={"center"}
-          bg="blue.100"
+          bg="darkThemeGrey.700"
           fontWeight={"bold"}
           fontSize={32}
-          color="blue.700"
+          color="darkThemeGrey.100"
         >
           {" "}
           Centru Donare Sange

@@ -9,13 +9,16 @@ export const theme = extendTheme({
   styles: {
     global: (props: any) => ({
       "html, body": {
-        bg: props.colorMode === "dark" ? "darkThemeGrey.700" : "white",
+        bg: "darkThemeGrey.600",
         color: props.colorMode === "dark" ? "darkThemeGrey.100" : "black",
       },
 
       "*": {
         ".slick-prev:before,.slick-next:before": {
-          color: props.colorMode === "dark" ? "darkThemeGrey.100" : "blue.700",
+          color:
+            props.colorMode === "dark"
+              ? "darkThemeGrey.100"
+              : "darkThemeGrey.700",
           margin: "5px",
         },
 
@@ -44,7 +47,8 @@ export const theme = extendTheme({
           borderRadius: "10px",
         },
         "&::-webkit-scrollbar-thumb": {
-          background: props.colorMode === "dark" ? "blue.400" : "blue.700",
+          background:
+            props.colorMode === "dark" ? "blue.400" : "darkThemeGrey.700",
           borderRadius: "10px",
         },
       },

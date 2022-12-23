@@ -12,9 +12,9 @@ export const OptionCustom: React.FC<OptionIntefface> = ({
     <Box
       px={2}
       color="neutralDarkGrey"
-      _hover={{ bg: "blue.100" }}
+      _hover={{ bg: "darkThemeGrey.600" }}
       _active={{
-        bg: "blue.100",
+        bg: "darkThemeGrey.600",
         transform: "scale(0.98)",
         borderColor: "neutralDarkGrey",
       }}

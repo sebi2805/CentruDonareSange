@@ -3,7 +3,7 @@ import React from "react";
 import { SideBarItem } from "./SideBarItem";
 export const SideBar: React.FC = () => {
   return (
-    <VStack h="100vh" w={52} bg="blue.100" pt={20}>
+    <VStack h="100vh" w={52} bg="darkThemeGrey.700" pt={20}>
       <SideBarItem url="../cadremedicale" name="CadreMedicale Table" />
       <SideBarItem url="../functii" name="Functii Table" />
       <SideBarItem url="../donatori" name="Donatori Table" />

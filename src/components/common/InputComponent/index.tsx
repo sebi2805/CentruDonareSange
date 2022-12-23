@@ -25,13 +25,14 @@ export const CDSInput: React.FC<CDSInputProps> = (props) => {
       if (onChange) onChange(e);
     }
   };
-  const colorFocusBorder = useColorModeValue("blue.800", "blue.400");
+  const colorFocusBorder = useColorModeValue("darkThemeGrey.100", "blue.400");
   const borderColor = useColorModeValue("gray.300", "darkThemeGrey.100");
   const dangerColor = useColorModeValue("danger.500", "darkThemeRed.400");
   return (
     <Box w="100%">
       <Input
         ref={props.ref}
+        color="darkThemeGrey.100"
         value={value === "NaN" ? "" : value}
         onChange={onChangeDto}
         borderRadius={4}
