@@ -138,6 +138,7 @@ export const GrupeSangeTable: React.FC = () => {
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Denumire">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti denumire"
                   value={currentData.denumire}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,6 +149,7 @@ export const GrupeSangeTable: React.FC = () => {
 
               <NameWrap title="AntiGene">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti antigene"
                   value={currentData.antigene.toString()}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,6 +160,7 @@ export const GrupeSangeTable: React.FC = () => {
 
               <NameWrap title="AntiCorpi">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti antigene"
                   value={currentData.anticorpi}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

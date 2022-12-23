@@ -135,6 +135,7 @@ export const RecipienteTable: React.FC = () => {
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Denumire">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti denumire"
                   value={currentData.denumire}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,6 +145,7 @@ export const RecipienteTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="Culoare">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti culoare"
                   value={currentData.culoare}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,6 +155,7 @@ export const RecipienteTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="Interval Temperatura Inceput">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti temperatura inceput"
                   value={currentData.temperaturaInceput.toString()}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -162,6 +165,7 @@ export const RecipienteTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="Interval Temperatura Sfarsit">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti temperatura sfarsit"
                   value={currentData.temperaturaSfarsit.toString()}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

@@ -122,6 +122,7 @@ export const FunctiiTable: React.FC = () => {
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Denumire">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti denumirea"
                   value={currentData.denumire}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,6 +132,7 @@ export const FunctiiTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="Salariu de baza">
                 <CDSInput
+                  isNumeric
                   placeholder="Introduceti salariul de baza"
                   value={currentData.salariuBaza?.toString()}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

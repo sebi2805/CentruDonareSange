@@ -1,5 +1,8 @@
 import {
+  Box,
   Flex,
+  Icon,
+  Spacer,
   Table,
   TableContainer,
   Tbody,
@@ -8,6 +11,7 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import { TableRow } from "./TableRow";
 
@@ -59,22 +63,30 @@ export const CDSTable: React.FC<CDSTableProps> = ({
               {Object.keys(tableData[0])?.map((k, i) => {
                 return (
                   <Th
+                    cursor={"pointer"}
                     key={k + i}
                     onClick={() => {
                       onSortInternal(i);
                     }}
+                    w="100%"
                   >
                     <Flex
                       w="100%"
                       fontWeight={"bold"}
                       fontSize={16}
-                      justify={
-                        typeof tableData[0][k] === "number"
-                          ? "flex-end"
-                          : "flex-start"
-                      }
+                      justify={"flex-end"}
                     >
-                      {k}
+                      <Box>{k}</Box>
+                      <Spacer />
+                      <Icon
+                        as={
+                          sortValue === i
+                            ? ascending
+                              ? ChevronDownIcon
+                              : ChevronUpIcon
+                            : ChevronUpIcon
+                        }
+                      />
                     </Flex>
                   </Th>
                 );

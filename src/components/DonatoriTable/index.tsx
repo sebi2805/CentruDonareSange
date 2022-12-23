@@ -165,6 +165,7 @@ export const DonatoriTable: React.FC = () => {
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Nume">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti nume"
                   value={currentData.nume}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -174,6 +175,7 @@ export const DonatoriTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="Prenume">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti prenume"
                   value={currentData.prenume}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -192,6 +194,7 @@ export const DonatoriTable: React.FC = () => {
 
               <NameWrap title="Inaltime">
                 <CDSInput
+                  isNumeric
                   placeholder="Introduceti inaltime"
                   value={currentData.inaltime.toString()}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -201,6 +204,7 @@ export const DonatoriTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="Greutate">
                 <CDSInput
+                  isNumeric
                   placeholder="Introduceti greutate"
                   value={currentData.greutate.toString()}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -210,6 +214,7 @@ export const DonatoriTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="CNP">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti CNP"
                   value={currentData.cnp}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

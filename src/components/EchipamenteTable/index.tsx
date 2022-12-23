@@ -140,6 +140,7 @@ export const EchipamentTable: React.FC = () => {
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Denumire Tehnica">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti denumirea tehnica"
                   value={currentData.denumireTehnica}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,6 +159,7 @@ export const EchipamentTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="Serie">
                 <CDSInput
+                  isNumeric={false}
                   value={currentData.serie}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onChange({ serie: e.target.value });

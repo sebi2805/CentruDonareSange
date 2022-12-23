@@ -157,6 +157,7 @@ export const ReviziiTehniceTable: React.FC = () => {
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Rezultat Revizie Tehnica">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti rezultat revizie tehnica"
                   value={currentData.rezultatRevizie}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

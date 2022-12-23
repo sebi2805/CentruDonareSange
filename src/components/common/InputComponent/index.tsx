@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Input,
@@ -7,14 +7,24 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-export interface WDInputProps extends InputProps {
+export interface CDSInputProps extends InputProps {
   error?: string;
   value?: string;
+  isNumeric: boolean;
   ref?: React.MutableRefObject<null>;
 }
 
-export const CDSInput: React.FC<WDInputProps> = (props) => {
-  const { error, value, ...others } = props;
+export const CDSInput: React.FC<CDSInputProps> = (props) => {
+  const [internalError, setInternalError] = useState<string>("");
+  const { error, value, isNumeric, onChange, ...others } = props;
+  const onChangeDto = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isNumeric && isNaN(parseInt(e.target.value)) && e.target.value !== "")
+      setInternalError("Only numeric input");
+    else {
+      setInternalError("");
+      if (onChange) onChange(e);
+    }
+  };
   const colorFocusBorder = useColorModeValue("blue.800", "blue.400");
   const borderColor = useColorModeValue("gray.300", "darkThemeGrey.100");
   const dangerColor = useColorModeValue("danger.500", "darkThemeRed.400");
@@ -22,7 +32,8 @@ export const CDSInput: React.FC<WDInputProps> = (props) => {
     <Box w="100%">
       <Input
         ref={props.ref}
-        value={value}
+        value={value === "NaN" ? "" : value}
+        onChange={onChangeDto}
         borderRadius={4}
         borderColor={error ? dangerColor : borderColor}
         focusBorderColor={error ? dangerColor : colorFocusBorder}
@@ -31,7 +42,9 @@ export const CDSInput: React.FC<WDInputProps> = (props) => {
         {...others}
       />
       <Box h={2} w="100%">
-        {error && <Text color={"danger.500"}>{error}</Text>}
+        {(internalError || error) && (
+          <Text color={"danger.500"}>{error || internalError}</Text>
+        )}
       </Box>
     </Box>
   );

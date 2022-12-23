@@ -133,6 +133,7 @@ export const SaloaneTable: React.FC = () => {
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Ora Inceput">
                 <CDSInput
+                  isNumeric
                   placeholder="Introduceti ora de inceput"
                   value={currentData.oraInceput.toString()}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,6 +143,7 @@ export const SaloaneTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="Ora Sfarsit">
                 <CDSInput
+                  isNumeric
                   placeholder="Introduceti ora de inceput"
                   value={currentData.oraSfarsit.toString()}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,6 +153,7 @@ export const SaloaneTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="suprafata">
                 <CDSInput
+                  isNumeric
                   placeholder="Introduceti suprafata"
                   value={currentData.suprafata.toString()}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

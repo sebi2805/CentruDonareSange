@@ -156,6 +156,7 @@ export const CadreMedicaleTable: React.FC = () => {
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Nume">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti nume"
                   value={currentData.nume}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -165,6 +166,7 @@ export const CadreMedicaleTable: React.FC = () => {
               </NameWrap>
               <NameWrap title="Prenume">
                 <CDSInput
+                  isNumeric={false}
                   placeholder="Introduceti prenume"
                   value={currentData.prenume}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
