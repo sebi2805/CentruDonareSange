@@ -2,6 +2,6 @@ import { BaseInterfaceModal } from "../utils/types";
 
 export interface FunctiiInterface extends BaseInterfaceModal {
   idFunctie?: number;
-  denumire: string;
-  salariuBaza: number;
+  denumire: string | null;
+  salariuBaza: number | null;
 }

@@ -4,8 +4,13 @@ import { ErrorServiceContext } from "../../App";
 
 import { CDSInput } from "../common/InputComponent";
 import { NameWrap } from "../common/NameWrap";
+import {
+  CDSMultiSelect,
+  SearchSelectInterface,
+} from "../common/SearchSelect/CDSMultiSelect";
 
 import { CustomSpinner } from "../common/Spinner";
+import { EchipamenteInterface } from "../EchipamenteTable/types";
 import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
@@ -14,7 +19,7 @@ import { SaloaneInterface } from "./types";
 export const SaloaneTable: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { createError, createToast } = useContext(ErrorServiceContext);
-
+  const [options, setOptions] = useState<SearchSelectInterface[]>([]);
   const [data, setData] = useState<SaloaneInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<SaloaneInterface>({
@@ -43,6 +48,25 @@ export const SaloaneTable: React.FC = () => {
         setLoading(true);
 
         createToast("Succes");
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get data.");
+      });
+    await apiClient
+      .get(`/api/Echipamente/get-all`)
+      .then((res) => {
+        setOptions(
+          res.data.data.map((d: EchipamenteInterface) => {
+            return {
+              value: d.idEchipament,
+              label: d.denumireTehnica,
+            };
+          })
+        );
+        setLoading(true);
+
+        createToast("Success");
       })
       .catch((err) => {
         console.log(err);
@@ -115,7 +139,7 @@ export const SaloaneTable: React.FC = () => {
 
   return (
     <>
-      <VStack w="100%" h="100%">
+      <VStack w="100%">
         <HStack w="100%" justify="center" px={8} py={8}>
           <Box fontSize={40} fontWeight="bold" color="darkThemeGrey.100">
             Table Saloane
@@ -151,7 +175,7 @@ export const SaloaneTable: React.FC = () => {
                   }}
                 />
               </NameWrap>
-              <NameWrap title="suprafata">
+              <NameWrap title="Suprafata">
                 <CDSInput
                   isNumeric
                   placeholder="Introduceti suprafata"
@@ -161,6 +185,20 @@ export const SaloaneTable: React.FC = () => {
                   }}
                 />
               </NameWrap>
+              {!currentData.isEdit ? (
+                <NameWrap title="Echipamente">
+                  <CDSMultiSelect
+                    options={options}
+                    placeholder="Introduceti echipamentele"
+                    value={
+                      currentData.idEchipamente?.map((d) => d.toString()) || []
+                    }
+                    onChange={(values: number[]) => {
+                      onChange({ idEchipamente: values });
+                    }}
+                  />
+                </NameWrap>
+              ) : null}
             </VStack>
           </CDSModal>
         </HStack>

@@ -37,12 +37,12 @@ export const DonatiiTable: React.FC = () => {
   const [data, setData] = useState<DonatiiInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<DonatiiInterface>({
-    idCadruMedical: 0,
-    idDonator: 0,
-    idRecipient: 0,
-    idSalon: 0,
+    idCadruMedical: null,
+    idDonator: null,
+    idRecipient: null,
+    idSalon: null,
 
-    dataRecoltare: "",
+    dataRecoltare: moment().format("YYYY-MM-DD"),
   });
   const onSort = async (index: number) => {
     await apiClient
@@ -217,7 +217,7 @@ export const DonatiiTable: React.FC = () => {
                   options={optionsCadreMedicale}
                   onChange={(value: number | undefined | null | string) => {
                     onChange({
-                      idCadruMedical: typeof value === "number" ? value : 0,
+                      idCadruMedical: typeof value === "number" ? value : null,
                     });
                   }}
                 />
@@ -228,7 +228,7 @@ export const DonatiiTable: React.FC = () => {
                   options={optionsDonatori}
                   onChange={(value: number | undefined | null | string) => {
                     onChange({
-                      idDonator: typeof value === "number" ? value : 0,
+                      idDonator: typeof value === "number" ? value : null,
                     });
                   }}
                 />
@@ -239,7 +239,7 @@ export const DonatiiTable: React.FC = () => {
                   options={optionsRecipiente}
                   onChange={(value: number | undefined | null | string) => {
                     onChange({
-                      idRecipient: typeof value === "number" ? value : 0,
+                      idRecipient: typeof value === "number" ? value : null,
                     });
                   }}
                 />
@@ -250,7 +250,7 @@ export const DonatiiTable: React.FC = () => {
                   options={optionsSalon}
                   onChange={(value: number | undefined | null | string) => {
                     onChange({
-                      idSalon: typeof value === "number" ? value : 0,
+                      idSalon: typeof value === "number" ? value : null,
                     });
                   }}
                 />
@@ -258,7 +258,7 @@ export const DonatiiTable: React.FC = () => {
               <NameWrap title="Data Recoltare">
                 <CDSDatePicker
                   placeholder="Selectati data recoltare"
-                  value={currentData.dataRecoltare}
+                  value={currentData.dataRecoltare ?? ""}
                   onChange={(value: string) => {
                     onChange({
                       dataRecoltare: value,

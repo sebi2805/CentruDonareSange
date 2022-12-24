@@ -1,4 +1,5 @@
 import { Box, HStack, Spacer, useDisclosure, VStack } from "@chakra-ui/react";
+import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { ErrorServiceContext } from "../../App";
 import { CDSDatePicker } from "../common/DatePicker/CDSDatePicker";
@@ -23,9 +24,9 @@ export const CadreMedicaleTable: React.FC = () => {
   const [data, setData] = useState<CadreMedicaleInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<CadreMedicaleInterface>({
-    nume: "",
-    prenume: "",
-    dataAngajarii: "",
+    nume: null,
+    prenume: null,
+    dataAngajarii: moment().format("YYYY-MM-DD"),
     idFunctie: null,
   });
   const getData = async () => {
@@ -72,7 +73,12 @@ export const CadreMedicaleTable: React.FC = () => {
   };
   const onCloseModal = () => {
     onClose();
-    setCurrentData({ nume: "", prenume: "", dataAngajarii: "", idFunctie: 0 });
+    setCurrentData({
+      nume: null,
+      prenume: null,
+      dataAngajarii: moment().format("YYYY-MM-DD"),
+      idFunctie: null,
+    });
   };
   const onOpenUpdate = (index: number) => {
     onOpen();
@@ -167,9 +173,11 @@ export const CadreMedicaleTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti nume"
-                  value={currentData.nume}
+                  value={currentData.nume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ nume: e.target.value });
+                    onChange({
+                      nume: e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>
@@ -177,9 +185,11 @@ export const CadreMedicaleTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti prenume"
-                  value={currentData.prenume}
+                  value={currentData.prenume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ prenume: e.target.value });
+                    onChange({
+                      prenume: e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>

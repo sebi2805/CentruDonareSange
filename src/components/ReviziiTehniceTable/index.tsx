@@ -25,9 +25,9 @@ export const ReviziiTehniceTable: React.FC = () => {
   const [data, setData] = useState<ReviziiTehniceInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<ReviziiTehniceInterface>({
-    dataRevizie: moment().toString(),
-    rezultatRevizie: "",
-    idEchipament: 0,
+    dataRevizie: moment().format("YYYY-MM-DD"),
+    rezultatRevizie: null,
+    idEchipament: null,
   });
   const onSort = async (index: number) => {
     await apiClient
@@ -72,9 +72,9 @@ export const ReviziiTehniceTable: React.FC = () => {
   const onCloseModal = () => {
     onClose();
     setCurrentData({
-      dataRevizie: moment().toString(),
-      rezultatRevizie: "",
-      idEchipament: 0,
+      dataRevizie: moment().format("YYYY-MM-DD"),
+      rezultatRevizie: null,
+      idEchipament: null,
     });
   };
   const onOpenUpdate = (index: number) => {
@@ -159,9 +159,12 @@ export const ReviziiTehniceTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti rezultat revizie tehnica"
-                  value={currentData.rezultatRevizie}
+                  value={currentData.rezultatRevizie ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ rezultatRevizie: e.target.value });
+                    onChange({
+                      rezultatRevizie:
+                        e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>
@@ -180,7 +183,7 @@ export const ReviziiTehniceTable: React.FC = () => {
                   options={options}
                   onChange={(value: number | undefined | null | string) => {
                     onChange({
-                      idEchipament: typeof value === "number" ? value : 0,
+                      idEchipament: typeof value === "number" ? value : null,
                     });
                   }}
                 />

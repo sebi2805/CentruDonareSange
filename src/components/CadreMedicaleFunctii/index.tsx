@@ -16,8 +16,8 @@ export const CadreMedicaleFunctii: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<CadrulMedicalFunctieInterface>(
     {
-      nume: "",
-      prenume: "",
+      nume: null,
+      prenume: null,
       idCadruMedical: 0,
       denumire: "",
       salariuBaza: 0,
@@ -51,8 +51,8 @@ export const CadreMedicaleFunctii: React.FC = () => {
     onClose();
     setCurrentData({
       ...currentData,
-      nume: "",
-      prenume: "",
+      nume: null,
+      prenume: null,
       idCadruMedical: 0,
     });
   };
@@ -140,19 +140,23 @@ export const CadreMedicaleFunctii: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti numele"
-                  value={currentData.nume}
+                  value={currentData.nume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ nume: e.target.value });
+                    onChange({
+                      nume: e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>
               <NameWrap title="Salariu de baza">
                 <CDSInput
-                  isNumeric={false}
+                  isNumeric
                   placeholder="Introduceti prenumele"
-                  value={currentData.prenume}
+                  value={currentData.prenume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ prenume: e.target.value });
+                    onChange({
+                      prenume: e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>

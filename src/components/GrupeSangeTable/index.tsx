@@ -18,7 +18,7 @@ export const GrupeSangeTable: React.FC = () => {
   const [data, setData] = useState<GrupeSangeInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<GrupeSangeInterface>({
-    denumire: "",
+    denumire: null,
     antigene: "",
     anticorpi: "",
   });
@@ -52,7 +52,7 @@ export const GrupeSangeTable: React.FC = () => {
   const onCloseModal = () => {
     onClose();
     setCurrentData({
-      denumire: "",
+      denumire: null,
       antigene: "",
       anticorpi: "",
     });
@@ -141,9 +141,11 @@ export const GrupeSangeTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti denumire"
-                  value={currentData.denumire}
+                  value={currentData.denumire ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ denumire: e.target.value });
+                    onChange({
+                      denumire: e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>

@@ -1,16 +1,7 @@
-import {
-  Box,
-  filter,
-  HStack,
-  Spacer,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
-import moment from "moment";
+import { Box, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { ErrorServiceContext } from "../../App";
 import { CadreMedicaleInterface } from "../CadreMedicaleTable/types";
-import { CDSDatePicker } from "../common/DatePicker/CDSDatePicker";
 import { CDSInput } from "../common/InputComponent";
 
 import { NameWrap } from "../common/NameWrap";
@@ -18,7 +9,6 @@ import { SearchSelectInterface } from "../common/SearchSelect/CDSMultiSelect";
 import { CDSSearchSelect } from "../common/SearchSelect/CDSSearchSelect";
 
 import { CustomSpinner } from "../common/Spinner";
-import { CDSModal } from "../ModalComponent";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
 import { CadreMedicaleCount, FilterCadreMedicaleCount } from "./types";
@@ -37,7 +27,7 @@ export const CadreMedicaleCountTable: React.FC = () => {
   const changeFilterData = (data: Partial<FilterCadreMedicaleCount>) => {
     setFilterData({ ...filterData, ...data });
   };
-
+  const [empty, setEmpty] = useState<boolean>(false);
   const [data, setData] = useState<CadreMedicaleCount[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -47,9 +37,11 @@ export const CadreMedicaleCountTable: React.FC = () => {
       .then((res) => {
         if (res.data.data?.length === 0) {
           createError("No data found.");
+          setEmpty(true);
         } else {
           setData(res.data.data);
           setLoading(true);
+          setEmpty(false);
           createToast("Succes");
         }
       })
@@ -75,7 +67,7 @@ export const CadreMedicaleCountTable: React.FC = () => {
         setOptions(
           res.data.data.map((item: CadreMedicaleInterface) => ({
             value: item.idCadruMedical,
-            label: item.nume + item.prenume,
+            label: item.nume ?? "" + item.prenume ?? "",
           }))
         );
       })
@@ -132,6 +124,7 @@ export const CadreMedicaleCountTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            isEmpty={empty}
             isNotUpdatable
             onSort={onSort}
             tableData={data}

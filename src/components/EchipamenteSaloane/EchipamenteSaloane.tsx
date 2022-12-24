@@ -1,7 +1,6 @@
 import { Box, HStack, Spacer, useDisclosure, VStack } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { ErrorServiceContext } from "../../App";
-import { CDSInput } from "../common/InputComponent";
 
 import { NameWrap } from "../common/NameWrap";
 import {
@@ -44,7 +43,7 @@ export const EchipamenteSaloane: React.FC = () => {
   >([]);
   const onSort = async (index: number) => {
     await apiClient
-      .get(`/api/GrupeSange/get-all?order=${index}`)
+      .get(`/api/SaloaneEchipamente/get-all?order=${index}`)
       .then((res) => {
         setData(res.data.data);
         setLoading(true);

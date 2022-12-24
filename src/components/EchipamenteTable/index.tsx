@@ -6,10 +6,15 @@ import { CDSDatePicker } from "../common/DatePicker/CDSDatePicker";
 
 import { CDSInput } from "../common/InputComponent";
 import { NameWrap } from "../common/NameWrap";
+import {
+  CDSMultiSelect,
+  SearchSelectInterface,
+} from "../common/SearchSelect/CDSMultiSelect";
 
 import { CustomSpinner } from "../common/Spinner";
 import { EchipamenteInterface } from "../EchipamenteTable/types";
 import { CDSModal } from "../ModalComponent";
+import { SaloaneInterface } from "../SaloaneTable/types";
 import { CDSTable } from "../TableComponent";
 import { apiClient } from "../utils/apiClient";
 
@@ -19,9 +24,10 @@ export const EchipamentTable: React.FC = () => {
 
   const [data, setData] = useState<EchipamenteInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [options, setOptions] = useState<SearchSelectInterface[]>([]);
   const [currentData, setCurrentData] = useState<EchipamenteInterface>({
-    denumireTehnica: "",
-    serie: "",
+    denumireTehnica: null,
+    serie: null,
     dataCumparare: moment().toISOString(),
   });
   const onSort = async (index: number) => {
@@ -50,13 +56,30 @@ export const EchipamentTable: React.FC = () => {
         console.log(err);
         createError("Can't get data.");
       });
+    await apiClient
+      .get(`/api/Saloane/get-all`)
+      .then((res) => {
+        setOptions(
+          res.data.data.map((d: SaloaneInterface) => ({
+            value: d.idSalon,
+            label: d.idSalon,
+          }))
+        );
+        setLoading(true);
+
+        createToast("Succes");
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get data.");
+      });
   };
   const onCloseModal = () => {
     onClose();
     setCurrentData({
+      denumireTehnica: null,
+      serie: null,
       dataCumparare: moment().toISOString(),
-      denumireTehnica: "",
-      serie: "",
     });
   };
   const onOpenUpdate = (index: number) => {
@@ -105,10 +128,10 @@ export const EchipamentTable: React.FC = () => {
       .delete(`/api/Echipamente/delete?id=${data[index].idEchipament}`)
       .then((res) => {
         setData(data.filter((d, i) => i !== index));
-        createToast("RevizieTehnica deleted succesufully");
+        createToast("Echipamente deleted succesufully");
       })
       .catch((err) => {
-        createError("RevizieTehnica delete error");
+        createError("Echipamente delete error");
         console.log(err);
       });
   };
@@ -142,9 +165,12 @@ export const EchipamentTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti denumirea tehnica"
-                  value={currentData.denumireTehnica}
+                  value={currentData.denumireTehnica ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ denumireTehnica: e.target.value });
+                    onChange({
+                      denumireTehnica:
+                        e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>
@@ -160,12 +186,29 @@ export const EchipamentTable: React.FC = () => {
               <NameWrap title="Serie">
                 <CDSInput
                   isNumeric={false}
-                  value={currentData.serie}
+                  placeholder="Serie"
+                  value={currentData.serie ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ serie: e.target.value });
+                    onChange({
+                      serie: e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>
+              {!currentData.isEdit ? (
+                <NameWrap title="Saloane">
+                  <CDSMultiSelect
+                    options={options}
+                    placeholder="Introduceti echipamentele"
+                    value={
+                      currentData.idSaloane?.map((d) => d.toString()) || []
+                    }
+                    onChange={(values: number[]) => {
+                      onChange({ idSaloane: values });
+                    }}
+                  />
+                </NameWrap>
+              ) : null}
             </VStack>
           </CDSModal>
         </HStack>

@@ -133,6 +133,7 @@ export const DonatiiJoinTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            isNotUpdatable
             isEmpty={empty}
             onSort={onSort}
             tableData={data}

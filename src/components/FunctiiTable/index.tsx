@@ -124,9 +124,11 @@ export const FunctiiTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti denumirea"
-                  value={currentData.denumire}
+                  value={currentData.denumire ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ denumire: e.target.value });
+                    onChange({
+                      denumire: e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>

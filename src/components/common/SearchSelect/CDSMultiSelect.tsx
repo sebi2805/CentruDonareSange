@@ -28,22 +28,9 @@ export const CDSMultiSelect: React.FC<CDSSearchProps> = (props) => {
   const blue500 = theme.colors.blue[500];
   const { onChange, options, error, value, ...others } = props;
   const [didMount, setDidMount] = useState<boolean>(false);
-  const computeInitialOptions = () => {
-    const newOptions = options;
-    value.forEach((val) => {
-      if (options.filter((option) => option.value === val).length === 0) {
-        newOptions.push({
-          value: val,
-          label: val.charAt(0).toUpperCase() + val.slice(1),
-        });
-      }
-    });
-    return newOptions;
-  };
 
-  const [optionsValues, setOptionsValues] = useState<SearchSelectInterface[]>(
-    computeInitialOptions()
-  );
+  const [optionsValues, setOptionsValues] =
+    useState<SearchSelectInterface[]>(options);
 
   const [selectValue, setSelectValue] = useState<
     MultiValue<SearchSelectInterface>
@@ -71,14 +58,17 @@ export const CDSMultiSelect: React.FC<CDSSearchProps> = (props) => {
 
   const handleChange = (newValue: MultiValue<SearchSelectInterface>) => {
     setSelectValue(newValue);
-    const newOptionsValues = optionsValues;
+    console.log(
+      options.filter(
+        (option) => !newValue.map((val) => val.value).includes(option.value)
+      )
+    );
 
-    newValue.forEach((val) => {
-      if (optionsValues.filter((valOp) => valOp === val).length === 0) {
-        newOptionsValues.push(val);
-      }
-    });
-    setOptionsValues(newOptionsValues);
+    setOptionsValues(
+      options.filter(
+        (option) => !newValue.map((val) => val.value).includes(option.value)
+      )
+    );
   };
 
   useEffect(() => {
@@ -109,6 +99,7 @@ export const CDSMultiSelect: React.FC<CDSSearchProps> = (props) => {
       };
     },
   };
+  console.log(optionsValues);
 
   const customStylesError = {
     control: (provided: any, state: any) => ({

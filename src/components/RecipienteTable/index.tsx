@@ -74,6 +74,7 @@ export const RecipienteTable: React.FC = () => {
             else return d;
           })
         );
+        onCloseModal();
         createToast("Recipient updated succesufully");
       })
       .catch((err) => {

@@ -5,4 +5,5 @@ export interface SaloaneInterface extends BaseInterfaceModal {
   oraInceput: number;
   oraSfarsit: number;
   suprafata: number;
+  idEchipamente?: number[];
 }

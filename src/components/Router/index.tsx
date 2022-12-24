@@ -46,7 +46,7 @@ export const RoutesComponent: React.FC = () => {
         }
       />
       <Route
-        path="/echipamentes"
+        path="/echipaments"
         element={
           <DashboardWrapper>
             <EchipamentTable />

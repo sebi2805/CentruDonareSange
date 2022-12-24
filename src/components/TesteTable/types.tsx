@@ -3,9 +3,9 @@ import { BaseInterfaceModal } from "../utils/types";
 
 export interface TesteInterface extends BaseInterfaceModal {
   idTest?: number;
-  hiv: string;
-  hcv: string;
-  verificareGrupajulSanguin: string;
-  diabet: string;
-  idDonatie: number;
+  hiv: string | null;
+  hcv: string | null;
+  verificareGrupajulSanguin: string | null;
+  diabet: string | null;
+  idDonatie: number | null;
 }

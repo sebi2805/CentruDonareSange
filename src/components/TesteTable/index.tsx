@@ -22,11 +22,11 @@ export const TesteTable: React.FC = () => {
   const [data, setData] = useState<TesteInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<TesteInterface>({
-    hcv: "",
-    hiv: "",
-    verificareGrupajulSanguin: "",
-    diabet: "",
-    idDonatie: 0,
+    hcv: null,
+    hiv: null,
+    verificareGrupajulSanguin: null,
+    diabet: null,
+    idDonatie: null,
   });
   const optionsNegativPozitiv: SearchSelectInterface[] = [
     { label: "pozitiv", value: "pozitiv" },
@@ -77,11 +77,11 @@ export const TesteTable: React.FC = () => {
   const onCloseModal = () => {
     onClose();
     setCurrentData({
-      hcv: "",
-      hiv: "",
-      verificareGrupajulSanguin: "",
-      diabet: "",
-      idDonatie: 0,
+      hcv: null,
+      hiv: null,
+      verificareGrupajulSanguin: null,
+      diabet: null,
+      idDonatie: null,
     });
   };
   const onOpenUpdate = (index: number) => {
@@ -139,6 +139,8 @@ export const TesteTable: React.FC = () => {
   const onChange = (data: Partial<TesteInterface>) => {
     setCurrentData({ ...currentData, ...data });
   };
+  console.log(currentData.idDonatie);
+
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -213,10 +215,10 @@ export const TesteTable: React.FC = () => {
                 <CDSSearchSelect
                   options={options}
                   placeholder="Introduceti donatia"
-                  value={currentData.idDonatie.toString()}
+                  value={currentData.idDonatie}
                   onChange={(value: number | undefined | null | string) => {
                     onChange({
-                      idDonatie: typeof value === "number" ? value : 0,
+                      idDonatie: typeof value === "number" ? value : null,
                     });
                   }}
                 />

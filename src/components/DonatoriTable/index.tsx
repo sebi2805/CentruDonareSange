@@ -24,14 +24,14 @@ export const DonatoriTable: React.FC = () => {
   const [data, setData] = useState<DonatoriInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<DonatoriInterface>({
-    nume: "",
-    prenume: "",
+    nume: null,
+    prenume: null,
     dataNasterii: "",
     inaltime: 0,
     greutate: 0,
-    idGrupaSange: 0,
+    idGrupaSange: null,
     cnp: "",
-    sex: "",
+    sex: null,
   });
   const onSort = async (index: number) => {
     await apiClient
@@ -76,14 +76,14 @@ export const DonatoriTable: React.FC = () => {
   const onCloseModal = () => {
     onClose();
     setCurrentData({
-      nume: "",
-      prenume: "",
+      nume: null,
+      prenume: null,
       dataNasterii: "",
       inaltime: 0,
       greutate: 0,
-      idGrupaSange: 0,
+      idGrupaSange: null,
       cnp: "",
-      sex: "",
+      sex: null,
     });
   };
   const onOpenUpdate = (index: number) => {
@@ -168,9 +168,11 @@ export const DonatoriTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti nume"
-                  value={currentData.nume}
+                  value={currentData.nume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ nume: e.target.value });
+                    onChange({
+                      nume: e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>
@@ -178,9 +180,11 @@ export const DonatoriTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti prenume"
-                  value={currentData.prenume}
+                  value={currentData.prenume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ prenume: e.target.value });
+                    onChange({
+                      prenume: e.target.value === "" ? null : e.target.value,
+                    });
                   }}
                 />
               </NameWrap>
@@ -229,7 +233,7 @@ export const DonatoriTable: React.FC = () => {
                   options={optionsSex}
                   onChange={(value: number | undefined | null | string) => {
                     onChange({
-                      sex: typeof value === "string" ? value : "",
+                      sex: typeof value === "string" ? value : null,
                     });
                   }}
                 />
@@ -240,7 +244,7 @@ export const DonatoriTable: React.FC = () => {
                   options={options}
                   onChange={(value: number | undefined | null | string) => {
                     onChange({
-                      idGrupaSange: typeof value === "number" ? value : 0,
+                      idGrupaSange: typeof value === "number" ? value : null,
                     });
                   }}
                 />

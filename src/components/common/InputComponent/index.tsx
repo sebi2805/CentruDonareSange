@@ -29,7 +29,7 @@ export const CDSInput: React.FC<CDSInputProps> = (props) => {
   const borderColor = useColorModeValue("gray.300", "darkThemeGrey.100");
   const dangerColor = useColorModeValue("danger.500", "darkThemeRed.400");
   return (
-    <Box w="100%">
+    <Box w="100%" h="100%">
       <Input
         ref={props.ref}
         color="darkThemeGrey.100"
@@ -42,7 +42,7 @@ export const CDSInput: React.FC<CDSInputProps> = (props) => {
         padding={6}
         {...others}
       />
-      <Box h={2} w="100%">
+      <Box h={4} w="100%">
         {(internalError || error) && (
           <Text color={"danger.500"}>{error || internalError}</Text>
         )}
