@@ -63,9 +63,6 @@ export const TableRow: React.FC<TableRowProps> = ({
                   bg="darkThemeGrey.600"
                   _hover={{ bg: "darkThemeGrey.800" }}
                   color={"danger.500"}
-                  onClick={() => {
-                    onDelete(index);
-                  }}
                 >
                   Delete
                 </MenuItem>

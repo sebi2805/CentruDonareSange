@@ -26,7 +26,7 @@ export const CadreMedicaleTable: React.FC = () => {
     nume: "",
     prenume: "",
     dataAngajarii: "",
-    idFunctie: 0,
+    idFunctie: null,
   });
   const getData = async () => {
     await apiClient
@@ -86,7 +86,16 @@ export const CadreMedicaleTable: React.FC = () => {
         currentData
       )
       .then((res) => {
-        console.log(res.data.data);
+        console.log(currentData);
+
+        console.log(
+          data.map((d) => {
+            if (d.idCadruMedical === currentData.idCadruMedical)
+              return res.data.data;
+            else return d;
+          })
+        );
+
         setData(
           data.map((d) => {
             if (d.idCadruMedical === currentData.idCadruMedical)
@@ -94,6 +103,7 @@ export const CadreMedicaleTable: React.FC = () => {
             else return d;
           })
         );
+        onCloseModal();
         createToast("CadruMedical updated succesufully");
       })
       .catch((err) => {
@@ -125,7 +135,6 @@ export const CadreMedicaleTable: React.FC = () => {
       })
       .catch((err) => {
         createError("CadruMedical delete error");
-        console.log(err);
       });
   };
   const onChange = (data: Partial<CadreMedicaleInterface>) => {
@@ -186,9 +195,9 @@ export const CadreMedicaleTable: React.FC = () => {
                 <CDSSearchSelect
                   value={currentData.idFunctie}
                   options={options}
-                  onChange={(value: number | undefined | string) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
-                      idFunctie: typeof value === "number" ? value : 0,
+                      idFunctie: typeof value === "number" ? value : null,
                     });
                   }}
                 />

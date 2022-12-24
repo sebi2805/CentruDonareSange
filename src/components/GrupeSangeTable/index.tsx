@@ -75,6 +75,7 @@ export const GrupeSangeTable: React.FC = () => {
             else return d;
           })
         );
+        onCloseModal();
         createToast("Grupa Sange updated succesufully");
       })
       .catch((err) => {
@@ -151,7 +152,7 @@ export const GrupeSangeTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti antigene"
-                  value={currentData.antigene.toString()}
+                  value={currentData.antigene}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onChange({ antigene: e.target.value });
                   }}

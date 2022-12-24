@@ -1,3 +1,4 @@
+import { CloseIcon } from "@chakra-ui/icons";
 import { Box, Text } from "@chakra-ui/react";
 
 import React, { ReactElement, useEffect, useState } from "react";
@@ -13,10 +14,10 @@ export interface SearchSelectInterface {
   label: string;
 }
 interface CDSSearchProps extends Omit<StateManagedSelect, "onChange"> {
-  onChange: (val: number | undefined | string) => void;
+  onChange: (val: number | undefined | null | string) => void;
   error?: string;
   options: SearchSelectInterface[];
-  value?: number | string;
+  value?: number | string | null;
   placeholder?: string;
   isDisabled?: boolean;
 }
@@ -100,9 +101,23 @@ export const CDSSearchSelect: React.FC<CDSSearchProps> = (
       minWidth: "fit-content",
     }),
   };
-
+  const handleDelete = () => {
+    setSelectValue(null);
+    onChange(null);
+  };
   return (
-    <Box w="100%" h="100%" pb={1.5}>
+    <Box w="100%" h="100%" pb={1.5} position="relative">
+      {value !== null ? (
+        <CloseIcon
+          color="danger.500"
+          top={-5}
+          right={2}
+          // zIndex={1000000000000}
+          position={"absolute"}
+          onClick={handleDelete}
+        />
+      ) : null}
+
       <Select
         isDisabled={props.isDisabled ?? false}
         components={{ Option: CustomOption }}

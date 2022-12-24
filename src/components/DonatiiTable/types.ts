@@ -5,7 +5,6 @@ export interface DonatiiInterface extends BaseInterfaceModal {
   idDonator: number;
   idRecipient: number;
   idTest?: number;
-  anRecoltare: string;
   dataRecoltare: string;
   dataExpediere?: string;
   idCadruMedical: number;

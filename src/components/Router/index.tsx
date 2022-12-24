@@ -78,7 +78,7 @@ export const RoutesComponent: React.FC = () => {
         }
       />
       <Route
-        path="/donatii"
+        path="/donatiis"
         element={
           <DashboardWrapper>
             <DonatiiTable />

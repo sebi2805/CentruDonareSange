@@ -41,7 +41,7 @@ export const DonatiiTable: React.FC = () => {
     idDonator: 0,
     idRecipient: 0,
     idSalon: 0,
-    anRecoltare: "",
+
     dataRecoltare: "",
   });
   const onSort = async (index: number) => {
@@ -132,7 +132,7 @@ export const DonatiiTable: React.FC = () => {
       idDonator: 0,
       idRecipient: 0,
       idSalon: 0,
-      anRecoltare: "",
+
       dataRecoltare: "",
     });
   };
@@ -185,12 +185,6 @@ export const DonatiiTable: React.FC = () => {
       });
   };
   const onChange = (data: Partial<DonatiiInterface>) => {
-    console.log(data);
-    console.log(data.dataRecoltare + "." + data.dataExpediere);
-
-    console.log(
-      moment(data.dataRecoltare + "." + data.dataExpediere).toISOString()
-    );
     setCurrentData({ ...currentData, ...data });
   };
 
@@ -221,7 +215,7 @@ export const DonatiiTable: React.FC = () => {
                 <CDSSearchSelect
                   value={currentData.idCadruMedical}
                   options={optionsCadreMedicale}
-                  onChange={(value: number | undefined | string) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
                       idCadruMedical: typeof value === "number" ? value : 0,
                     });
@@ -232,7 +226,7 @@ export const DonatiiTable: React.FC = () => {
                 <CDSSearchSelect
                   value={currentData.idDonator}
                   options={optionsDonatori}
-                  onChange={(value: number | undefined | string) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
                       idDonator: typeof value === "number" ? value : 0,
                     });
@@ -243,7 +237,7 @@ export const DonatiiTable: React.FC = () => {
                 <CDSSearchSelect
                   value={currentData.idRecipient}
                   options={optionsRecipiente}
-                  onChange={(value: number | undefined | string) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
                       idRecipient: typeof value === "number" ? value : 0,
                     });
@@ -254,7 +248,7 @@ export const DonatiiTable: React.FC = () => {
                 <CDSSearchSelect
                   value={currentData.idSalon}
                   options={optionsSalon}
-                  onChange={(value: number | undefined | string) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
                       idSalon: typeof value === "number" ? value : 0,
                     });
@@ -264,20 +258,17 @@ export const DonatiiTable: React.FC = () => {
               <NameWrap title="Data Recoltare">
                 <CDSDatePicker
                   placeholder="Selectati data recoltare"
-                  value={moment(
-                    currentData.dataRecoltare + "." + currentData.anRecoltare
-                  ).toISOString()}
+                  value={currentData.dataRecoltare}
                   onChange={(value: string) => {
                     onChange({
-                      dataRecoltare: moment(value).format("MM.DD"),
-                      anRecoltare: moment(value).format("YYYY"),
+                      dataRecoltare: value,
                     });
                   }}
                 />
               </NameWrap>
               <NameWrap title="Data Expediere">
                 <CDSDatePicker
-                  placeholder="Selectati data recoltare"
+                  placeholder="Selectati data expediere"
                   value={currentData.dataExpediere || ""}
                   onChange={(value: string) => {
                     onChange({

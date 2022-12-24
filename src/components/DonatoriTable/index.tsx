@@ -101,6 +101,7 @@ export const DonatoriTable: React.FC = () => {
             else return d;
           })
         );
+        onCloseModal();
         createToast("Donator updated succesufully");
       })
       .catch((err) => {
@@ -226,7 +227,7 @@ export const DonatoriTable: React.FC = () => {
                 <CDSSearchSelect
                   value={currentData.sex}
                   options={optionsSex}
-                  onChange={(value: number | undefined | string) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
                       sex: typeof value === "string" ? value : "",
                     });
@@ -237,7 +238,7 @@ export const DonatoriTable: React.FC = () => {
                 <CDSSearchSelect
                   value={currentData.idGrupaSange}
                   options={options}
-                  onChange={(value: number | undefined | string) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
                       idGrupaSange: typeof value === "number" ? value : 0,
                     });

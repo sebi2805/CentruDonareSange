@@ -167,7 +167,7 @@ export const TesteTable: React.FC = () => {
                   options={optionsNegativPozitiv}
                   placeholder="Introduceti HIV"
                   value={currentData.hiv}
-                  onChange={(value: string | number | undefined) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({ hiv: typeof value === "string" ? value : "" });
                   }}
                 />
@@ -178,7 +178,7 @@ export const TesteTable: React.FC = () => {
                   options={optionsNegativPozitiv}
                   placeholder="Introduceti rezultat revizie tehnica"
                   value={currentData.hcv}
-                  onChange={(value: string | number | undefined) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({ hcv: typeof value === "string" ? value : "" });
                   }}
                 />
@@ -189,7 +189,7 @@ export const TesteTable: React.FC = () => {
                   options={optionsNegativPozitiv}
                   placeholder="Introduceti rezultat diabet"
                   value={currentData.diabet}
-                  onChange={(value: string | number | undefined) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
                       diabet: typeof value === "string" ? value : "",
                     });
@@ -201,7 +201,7 @@ export const TesteTable: React.FC = () => {
                   options={optionsNegativPozitiv}
                   placeholder="Introduceti rezultat verificare grupajul sanguin"
                   value={currentData.hiv}
-                  onChange={(value: string | number | undefined) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
                       verificareGrupajulSanguin:
                         typeof value === "string" ? value : "",
@@ -214,7 +214,7 @@ export const TesteTable: React.FC = () => {
                   options={options}
                   placeholder="Introduceti donatia"
                   value={currentData.idDonatie.toString()}
-                  onChange={(value: string | number | undefined) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
                       idDonatie: typeof value === "number" ? value : 0,
                     });

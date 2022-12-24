@@ -4,6 +4,6 @@ export interface CadreMedicaleInterface extends BaseInterfaceModal {
   idCadruMedical?: number;
   nume: string;
   prenume: string;
-  idFunctie: number;
+  idFunctie: number | null;
   dataAngajarii: string;
 }

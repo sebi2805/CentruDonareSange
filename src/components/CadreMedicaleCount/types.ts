@@ -3,6 +3,6 @@ export interface CadreMedicaleCount {
   count: number;
 }
 export interface FilterCadreMedicaleCount {
-  idCadruMedical: number;
+  idCadruMedical: number | null;
   minCount: number;
 }

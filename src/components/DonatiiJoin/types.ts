@@ -11,5 +11,5 @@ export interface DonatiiFullInterface extends BaseInterfaceModal {
 export interface DonatiiJoinFilter {
   nume: string;
   prenume: string;
-  idGrupaSange: number;
+  idGrupaSange: number | null;
 }

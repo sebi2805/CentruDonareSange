@@ -219,7 +219,7 @@ export const EchipamenteSaloane: React.FC = () => {
                     <CDSSearchSelect
                       options={optionsSaloane}
                       value={currentData.idSalon}
-                      onChange={(value: number | string | undefined) => {
+                      onChange={(value: number | string | null | undefined) => {
                         onChange({
                           idSalon:
                             typeof value === "number"
@@ -234,7 +234,7 @@ export const EchipamenteSaloane: React.FC = () => {
                     <CDSSearchSelect
                       options={optionsEchipamente}
                       value={currentData.idEchipament}
-                      onChange={(value: number | string | undefined) => {
+                      onChange={(value: number | string | null | undefined) => {
                         onChange({
                           idEchipament:
                             typeof value === "number"

@@ -10,7 +10,7 @@ export const SideBar: React.FC = () => {
         <SideBarItem url="../donatori" name="Donatori Table" />
         <SideBarItem url="../grupesange" name="GrupeSange Table" />
         <SideBarItem url="../recipiente" name="Recipient Table" />
-        <SideBarItem url="../donatii" name="Donatii Table" />
+        <SideBarItem url="../donatiis" name="Donatii Table" />
         <SideBarItem url="../saloane" name="Saloane Table" />
         <SideBarItem url="../echipamentes" name="Echipamente Table" />
         <SideBarItem url="../reviziitehnice" name="ReviziiTehnice Table" />

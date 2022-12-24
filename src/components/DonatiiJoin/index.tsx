@@ -18,9 +18,9 @@ export const DonatiiJoinTable: React.FC = () => {
   const [filterData, setFilterData] = useState<DonatiiJoinFilter>({
     prenume: "",
     nume: "",
-    idGrupaSange: 0,
+    idGrupaSange: null,
   });
-  const defaultFilterData = { prenume: "", nume: "", idGrupaSange: 0 };
+  const defaultFilterData = { prenume: "", nume: "", idGrupaSange: null };
   const [options, setOptions] = useState<SearchSelectInterface[]>([]);
   const changeFilterData = (data: Partial<DonatiiJoinFilter>) => {
     setFilterData({ ...filterData, ...data });
@@ -119,12 +119,13 @@ export const DonatiiJoinTable: React.FC = () => {
           </NameWrap>
           <NameWrap title="Grupa Sange">
             <CDSSearchSelect
+              value={filterData.idGrupaSange}
               options={options}
-              onChange={(value: number | string | undefined) => {
+              onChange={(value: number | string | null | undefined) => {
                 setFilterData({
                   ...filterData,
                   idGrupaSange:
-                    typeof value === "number" ? value : parseInt(value || "0"),
+                    typeof value === "string" ? parseInt(value) : value || null,
                 });
               }}
             />

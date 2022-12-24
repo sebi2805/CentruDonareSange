@@ -45,7 +45,7 @@ export const MainPage: React.FC = () => {
         fontWeight={600}
         fontSize={16}
       >
-        <Box>Profesor coordonator: Prof. univ. Vasile .....</Box>
+        <Box>Profesor coordonator: Lect.dr. Silviu Laurențiu Vasile</Box>
       </HStack>
 
       <HStack justify={"flex-end"} w="100%" pr={4} pt={12}>

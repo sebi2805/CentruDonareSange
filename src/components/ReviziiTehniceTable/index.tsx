@@ -178,7 +178,7 @@ export const ReviziiTehniceTable: React.FC = () => {
                 <CDSSearchSelect
                   value={currentData.idEchipament}
                   options={options}
-                  onChange={(value: number | undefined | string) => {
+                  onChange={(value: number | undefined | null | string) => {
                     onChange({
                       idEchipament: typeof value === "number" ? value : 0,
                     });

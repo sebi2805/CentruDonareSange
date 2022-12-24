@@ -91,7 +91,7 @@ export const FullDonatiiTable: React.FC = () => {
             <CDSSearchSelect
               options={options}
               value={filterData.idGrupaSange}
-              onChange={(value: number | string | undefined) => {
+              onChange={(value: number | string | undefined | null) => {
                 changeFilterData({
                   idGrupaSange: typeof value === "number" ? value : 0,
                 });

@@ -27,8 +27,12 @@ export const CadreMedicaleCountTable: React.FC = () => {
   const { createError, createToast } = useContext(ErrorServiceContext);
   const [filterData, setFilterData] = useState<FilterCadreMedicaleCount>({
     minCount: 0,
-    idCadruMedical: 0,
+    idCadruMedical: null,
   });
+  const defaultFilterData: FilterCadreMedicaleCount = {
+    minCount: -1,
+    idCadruMedical: null,
+  };
   const [options, setOptions] = useState<SearchSelectInterface[]>([]);
   const changeFilterData = (data: Partial<FilterCadreMedicaleCount>) => {
     setFilterData({ ...filterData, ...data });
@@ -41,9 +45,13 @@ export const CadreMedicaleCountTable: React.FC = () => {
     await apiClient
       .post(`/api/Donatii/get-cadreMedicaleCount?order=${index}`, filterData)
       .then((res) => {
-        setData(res.data.data);
-        setLoading(true);
-        createToast("Succes");
+        if (res.data.data?.length === 0) {
+          createError("No data found.");
+        } else {
+          setData(res.data.data);
+          setLoading(true);
+          createToast("Succes");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +60,7 @@ export const CadreMedicaleCountTable: React.FC = () => {
   };
   const getData = async () => {
     await apiClient
-      .post(`/api/Donatii/get-cadreMedicaleCount?order=${0}`, filterData)
+      .post(`/api/Donatii/get-cadreMedicaleCount?order=${0}`, {})
       .then((res) => {
         setData(res.data.data);
         setLoading(true);
@@ -76,6 +84,9 @@ export const CadreMedicaleCountTable: React.FC = () => {
       });
   };
   useEffect(() => {
+    if (JSON.stringify(filterData) === JSON.stringify(defaultFilterData)) {
+      return;
+    }
     const timer = setTimeout(() => {
       onSort(0);
     }, 1000);
@@ -95,17 +106,18 @@ export const CadreMedicaleCountTable: React.FC = () => {
           </Box>
           <Spacer />
         </HStack>
-        <HStack>
+        <HStack h="100%">
           <NameWrap title="Cadru Medical">
             <CDSSearchSelect
               options={options}
-              onChange={(value: number | string | undefined) => {
+              onChange={(value: number | string | undefined | null) => {
                 setFilterData({
                   ...filterData,
                   idCadruMedical:
-                    typeof value === "number" ? value : parseInt(value || "0"),
+                    typeof value === "string" ? parseInt(value) : value || null,
                 });
               }}
+              value={filterData.idCadruMedical}
             />
           </NameWrap>
           <NameWrap title="Min count">
@@ -120,6 +132,7 @@ export const CadreMedicaleCountTable: React.FC = () => {
         </HStack>
         {loading ? (
           <CDSTable
+            isNotUpdatable
             onSort={onSort}
             tableData={data}
             onDelete={() => {}}
