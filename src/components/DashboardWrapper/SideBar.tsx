@@ -12,8 +12,12 @@ export const SideBar: React.FC = () => {
         <SideBarItem url="../recipiente" name="Recipient Table" />
         <SideBarItem url="../donatii" name="Donatii Table" />
         <SideBarItem url="../saloane" name="Saloane Table" />
-        <SideBarItem url="../echipamente" name="Echipamente Table" />
+        <SideBarItem url="../echipamentes" name="Echipamente Table" />
         <SideBarItem url="../reviziitehnice" name="ReviziiTehnice Table" />
+        <SideBarItem
+          url="../echipamenteSaloane"
+          name="EchipamentSaloane Table"
+        />
         <SideBarItem url="../donatiiJoin" name="DonatiiJoin Table" />
         <SideBarItem
           url="../cadreMedicaleCount"

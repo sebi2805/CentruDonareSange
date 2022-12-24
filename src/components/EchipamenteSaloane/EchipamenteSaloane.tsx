@@ -8,6 +8,7 @@ import {
   CDSMultiSelect,
   SearchSelectInterface,
 } from "../common/SearchSelect/CDSMultiSelect";
+import { CDSSearchSelect } from "../common/SearchSelect/CDSSearchSelect";
 
 import { CustomSpinner } from "../common/Spinner";
 import { EchipamenteInterface } from "../EchipamenteTable/types";
@@ -31,8 +32,8 @@ export const EchipamenteSaloane: React.FC = () => {
     idSalon: 0,
   });
   const [createData, setCreateData] = useState<CreateEchipamentSalonInterface>({
-    idEchipamente: [],
-    idSaloane: [],
+    idEchipament: [],
+    idSalon: [],
   });
   const [optionsSaloane, setOptionsSaloane] = useState<SearchSelectInterface[]>(
     []
@@ -56,7 +57,7 @@ export const EchipamenteSaloane: React.FC = () => {
   };
   const getData = async () => {
     await apiClient
-      .get(`/api/GrupeSange/get-all`)
+      .get(`/api/SaloaneEchipamente/get-all`)
       .then((res) => {
         setData(res.data.data);
         setLoading(true);
@@ -103,8 +104,8 @@ export const EchipamenteSaloane: React.FC = () => {
       idSalon: 0,
     });
     setCreateData({
-      idEchipamente: [],
-      idSaloane: [],
+      idEchipament: [],
+      idSalon: [],
     });
   };
   const onOpenUpdate = (index: number) => {
@@ -115,8 +116,11 @@ export const EchipamenteSaloane: React.FC = () => {
   const onUpdate = () => {
     apiClient
       .put(
-        `/api/EchipamenteSaloane/update?idSalone=${currentData.idEchipament}&idEchipamente=${currentData.idEchipament}`,
-        currentData
+        `/api/SaloaneEchipamente/update?idSalon=${currentData.idEchipament}&idEchipament=${currentData.idEchipament}`,
+        {
+          idSalon: [currentData.idSalon],
+          idEchipament: [currentData.idEchipament],
+        }
       )
       .then((res) => {
         setData(
@@ -134,7 +138,7 @@ export const EchipamenteSaloane: React.FC = () => {
 
   const onCreate = () => {
     apiClient
-      .post(`/api/EchipamenteSaloane/create`, createData)
+      .post(`/api/SaloaneEchipamente/create`, createData)
       .then((res) => {
         setData([...data, ...res.data.data]);
         setLoading(true);
@@ -150,7 +154,7 @@ export const EchipamenteSaloane: React.FC = () => {
   const onDelete = (index: number) => {
     apiClient
       .delete(
-        `/api/EchipamenteSaloane/delete?idEchipament=${data[index].idEchipament}&idSalon=${data[index].idSalon}`
+        `/api/SaloaneEchipamente/delete?idEchipament=${data[index].idEchipament}&idSalon=${data[index].idSalon}`
       )
       .then((res) => {
         setData(data.filter((d, i) => i !== index));
@@ -174,7 +178,7 @@ export const EchipamenteSaloane: React.FC = () => {
       <VStack w="100%">
         <HStack w="100%" justify="center" px={8} py={8}>
           <Box fontSize={40} fontWeight="bold" color="darkThemeGrey.100">
-            Table Grupe Sange
+            Table EchipamenteSaloane
           </Box>
           <Spacer />
           <CDSModal
@@ -193,9 +197,9 @@ export const EchipamenteSaloane: React.FC = () => {
                     <CDSMultiSelect
                       options={optionsSaloane}
                       onChange={(values: number[]) => {
-                        setCreateData({ ...createData, idSaloane: values });
+                        setCreateData({ ...createData, idSalon: values });
                       }}
-                      value={createData.idSaloane.map((s) => s.toString())}
+                      value={createData.idSalon.map((s) => s.toString())}
                     />
                   </NameWrap>
 
@@ -203,30 +207,40 @@ export const EchipamenteSaloane: React.FC = () => {
                     <CDSMultiSelect
                       options={optionsEchipamente}
                       onChange={(values: number[]) => {
-                        setCreateData({ ...createData, idEchipamente: values });
+                        setCreateData({ ...createData, idEchipament: values });
                       }}
-                      value={createData.idEchipamente.map((s) => s.toString())}
+                      value={createData.idEchipament.map((s) => s.toString())}
                     />
                   </NameWrap>
                 </>
               ) : (
                 <>
                   <NameWrap title="Saloane">
-                    <CDSInput
-                      isNumeric
-                      value={currentData.idSalon.toString()}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange({ idSalon: parseInt(e.target.value) });
+                    <CDSSearchSelect
+                      options={optionsSaloane}
+                      value={currentData.idSalon}
+                      onChange={(value: number | string | undefined) => {
+                        onChange({
+                          idSalon:
+                            typeof value === "number"
+                              ? value
+                              : parseInt(value || ""),
+                        });
                       }}
                     />
                   </NameWrap>
 
                   <NameWrap title="Echipamente">
-                    <CDSInput
-                      isNumeric
-                      value={currentData.idEchipament.toString()}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange({ idEchipament: parseInt(e.target.value) });
+                    <CDSSearchSelect
+                      options={optionsEchipamente}
+                      value={currentData.idEchipament}
+                      onChange={(value: number | string | undefined) => {
+                        onChange({
+                          idEchipament:
+                            typeof value === "number"
+                              ? value
+                              : parseInt(value || ""),
+                        });
                       }}
                     />
                   </NameWrap>

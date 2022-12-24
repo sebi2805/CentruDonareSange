@@ -1,4 +1,4 @@
-import { Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { default as StateManagedSelect, MultiValue } from "react-select";
 import CreatableSelect from "react-select/creatable";
@@ -138,17 +138,19 @@ export const CDSMultiSelect: React.FC<CDSSearchProps> = (props) => {
 
   return (
     <>
-      <CreatableSelect
-        isDisabled={props.isDisabled ?? false}
-        components={{ Option: CustomOption }}
-        options={optionsValues}
-        {...others}
-        isMulti={true}
-        onChange={handleChange}
-        styles={error ? customStylesError : customStyles}
-        value={selectValue}
-      ></CreatableSelect>
-      {error && <Text color={"danger.500"}>{error}</Text>}
+      <Box w="100%" h="100%">
+        <CreatableSelect
+          isDisabled={props.isDisabled ?? false}
+          components={{ Option: CustomOption }}
+          options={optionsValues}
+          {...others}
+          isMulti={true}
+          onChange={handleChange}
+          styles={error ? customStylesError : customStyles}
+          value={selectValue}
+        ></CreatableSelect>
+        {error && <Text color={"danger.500"}>{error}</Text>}
+      </Box>
     </>
   );
 };

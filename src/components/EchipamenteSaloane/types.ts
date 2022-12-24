@@ -5,6 +5,6 @@ export interface EchipamentSalonInterface extends BaseInterfaceModal {
   idEchipament: number;
 }
 export interface CreateEchipamentSalonInterface {
-  idSaloane: number[];
-  idEchipamente: number[];
+  idSalon: number[];
+  idEchipament: number[];
 }

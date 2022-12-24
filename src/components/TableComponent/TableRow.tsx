@@ -47,7 +47,7 @@ export const TableRow: React.FC<TableRowProps> = ({
           </Td>
         );
       })}
-      {isNotUpdatable ? (
+      {!isNotUpdatable ? (
         <Td isNumeric>
           <Menu>
             <MenuButton

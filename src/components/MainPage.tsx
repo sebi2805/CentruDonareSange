@@ -1,6 +1,13 @@
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, HStack, Spacer, VStack } from "@chakra-ui/react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 export const MainPage: React.FC = () => {
+  const navigation = useNavigate();
+  const handleNavigate = () => {
+    navigation("/cadreMedicales");
+  };
+
   return (
     <VStack
       pt={16}
@@ -16,10 +23,20 @@ export const MainPage: React.FC = () => {
         2022-2023
       </Box>
 
-      <Box fontWeight={"bold"} fontSize={32}>
-        {" "}
-        Centru Donare Sange
-      </Box>
+      <HStack
+        align={"center"}
+        justify={"center"}
+        cursor={"pointer"}
+        onClick={handleNavigate}
+      >
+        <Box fontWeight={"bold"} fontSize={32}>
+          {" "}
+          Centru Donare Sange
+        </Box>
+        <Box>
+          <ArrowForwardIcon boxSize={8} />
+        </Box>
+      </HStack>
       <Spacer />
       <HStack
         w="100%"

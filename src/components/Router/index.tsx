@@ -7,6 +7,7 @@ import { DashboardWrapper } from "../DashboardWrapper";
 import { DonatiiJoinTable } from "../DonatiiJoin";
 import { DonatiiTable } from "../DonatiiTable";
 import { DonatoriTable } from "../DonatoriTable";
+import { EchipamenteSaloane } from "../EchipamenteSaloane/EchipamenteSaloane";
 import { EchipamentTable } from "../EchipamenteTable";
 import { FunctiiCount } from "../FunctiiCount";
 import { FunctiiTable } from "../FunctiiTable";
@@ -45,7 +46,7 @@ export const RoutesComponent: React.FC = () => {
         }
       />
       <Route
-        path="/echipamente"
+        path="/echipamentes"
         element={
           <DashboardWrapper>
             <EchipamentTable />
@@ -136,7 +137,7 @@ export const RoutesComponent: React.FC = () => {
         path="/echipamenteSaloane"
         element={
           <DashboardWrapper>
-            <CadreMedicaleFunctii />
+            <EchipamenteSaloane />
           </DashboardWrapper>
         }
       />

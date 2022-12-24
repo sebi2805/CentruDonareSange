@@ -53,7 +53,7 @@ export const CDSModal: React.FC<CDSModalProps> = ({
           <ModalHeader bg="darkThemeGrey.700" color="white">
             {title}
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton color="white" />
           <ModalBody bg="darkThemeGrey.600">{children}</ModalBody>
           <ModalFooter bg="darkThemeGrey.600">
             <HStack justify={"flex-end"} w="100%">
