@@ -14,9 +14,12 @@ import {
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import { TableRow } from "./TableRow";
+import { log } from "console";
 
 interface CDSTableProps {
+  isEmpty?: boolean;
   tableData: any[];
+  isNotUpdatable?: boolean;
   onUpdate: (index: number) => void;
   onDelete: (index: number) => void;
   onSort: (index: number) => void;
@@ -25,8 +28,10 @@ interface CDSTableProps {
 export const CDSTable: React.FC<CDSTableProps> = ({
   tableData,
   onDelete,
+  isEmpty,
   onUpdate,
   onSort,
+  isNotUpdatable,
 }) => {
   const [sortValue, setSortValue] = useState<number>(0);
   const [ascending, setAscending] = useState<boolean>(true);
@@ -46,6 +51,7 @@ export const CDSTable: React.FC<CDSTableProps> = ({
       if (onSort) onSort((index + 1) * 2 - 1);
     }
   };
+  console.log(tableData);
   return (
     <VStack w="100%" h="100%" align={"flex-start"} justify="flex-start">
       <TableContainer w="100%" h="100%" px={4}>
@@ -55,58 +61,70 @@ export const CDSTable: React.FC<CDSTableProps> = ({
           border="2px solid"
           borderColor="neutralGrey"
         >
-          <Thead bg="darkThemeGrey.600" color="darkThemeGrey.700">
-            <Tr>
-              <Th fontWeight={"bold"} fontSize={16} isNumeric>
-                Index
-              </Th>
-              {Object.keys(tableData[0])?.map((k, i) => {
-                return (
-                  <Th
-                    cursor={"pointer"}
-                    key={k + i}
-                    onClick={() => {
-                      onSortInternal(i);
-                    }}
-                    w="100%"
-                  >
-                    <Flex
-                      w="100%"
-                      fontWeight={"bold"}
-                      fontSize={16}
-                      justify={"flex-end"}
-                    >
-                      <Box>{k}</Box>
-                      <Spacer />
-                      <Icon
-                        as={
-                          sortValue === i
-                            ? ascending
-                              ? ChevronDownIcon
-                              : ChevronUpIcon
-                            : ChevronUpIcon
-                        }
-                      />
-                    </Flex>
+          {tableData !== null &&
+          tableData !== undefined &&
+          tableData?.length > 0 ? (
+            <>
+              <Thead bg="darkThemeGrey.800" color="white">
+                <Tr>
+                  <Th fontWeight={"bold"} fontSize={16} isNumeric color="white">
+                    Index
                   </Th>
-                );
-              })}
-              <Th></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {tableData?.map((t, i) => {
-              return (
-                <TableRow
-                  index={i}
-                  rowData={t}
-                  key={i + "TableRow"}
-                  onDelete={onDelete}
-                  onUpdate={onUpdate}
-                />
-              );
-            })}
-          </Tbody>
+                  {Object.keys(tableData[0])?.map((k, i) => {
+                    return (
+                      <Th
+                        color="white"
+                        cursor={"pointer"}
+                        key={k + i}
+                        onClick={() => {
+                          onSortInternal(i);
+                        }}
+                        w="100%"
+                      >
+                        <Flex
+                          w="100%"
+                          fontWeight={"bold"}
+                          fontSize={16}
+                          justify={"flex-end"}
+                        >
+                          <Box>{k}</Box>
+                          <Spacer />
+                          <Icon
+                            as={
+                              sortValue === i
+                                ? ascending
+                                  ? ChevronDownIcon
+                                  : ChevronUpIcon
+                                : ChevronUpIcon
+                            }
+                          />
+                        </Flex>
+                      </Th>
+                    );
+                  })}
+                  <Th></Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {!isEmpty ? (
+                  <>
+                    {tableData?.map((t, i) => {
+                      return (
+                        <TableRow
+                          isNotUpdatable={isNotUpdatable}
+                          index={i}
+                          rowData={t}
+                          key={i + "TableRow"}
+                          onDelete={onDelete}
+                          onUpdate={onUpdate}
+                        />
+                      );
+                    })}
+                  </>
+                ) : null}
+              </Tbody>
+            </>
+          ) : null}
         </Table>
       </TableContainer>
     </VStack>

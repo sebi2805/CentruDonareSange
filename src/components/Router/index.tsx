@@ -1,11 +1,14 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { CadreMedicaleCountTable } from "../CadreMedicaleCount/CadreMedicaleCount";
+import { CadreMedicaleFunctii } from "../CadreMedicaleFunctii";
 import { CadreMedicaleTable } from "../CadreMedicaleTable";
 import { DashboardWrapper } from "../DashboardWrapper";
+import { DonatiiJoinTable } from "../DonatiiJoin";
 import { DonatiiTable } from "../DonatiiTable";
 import { DonatoriTable } from "../DonatoriTable";
 import { EchipamentTable } from "../EchipamenteTable";
+import { FunctiiCount } from "../FunctiiCount";
 import { FunctiiTable } from "../FunctiiTable";
 import { GrupeSangeTable } from "../GrupeSangeTable";
 import { MainPage } from "../MainPage";
@@ -18,7 +21,7 @@ export const RoutesComponent: React.FC = () => {
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route
-        path="/functii"
+        path="/functiis"
         element={
           <DashboardWrapper>
             <FunctiiTable />
@@ -26,7 +29,7 @@ export const RoutesComponent: React.FC = () => {
         }
       />
       <Route
-        path="/cadremedicale"
+        path="/cadremedicales"
         element={
           <DashboardWrapper>
             <CadreMedicaleTable />
@@ -102,6 +105,38 @@ export const RoutesComponent: React.FC = () => {
         element={
           <DashboardWrapper>
             <CadreMedicaleCountTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/donatiiJoin"
+        element={
+          <DashboardWrapper>
+            <DonatiiJoinTable />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/functiiCount"
+        element={
+          <DashboardWrapper>
+            <FunctiiCount />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/cadreMedicaleFunctii"
+        element={
+          <DashboardWrapper>
+            <CadreMedicaleFunctii />
+          </DashboardWrapper>
+        }
+      />
+      <Route
+        path="/echipamenteSaloane"
+        element={
+          <DashboardWrapper>
+            <CadreMedicaleFunctii />
           </DashboardWrapper>
         }
       />

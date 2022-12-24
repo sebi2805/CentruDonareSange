@@ -15,6 +15,7 @@ import { CDSConfirmDelete } from "../common/CDSConfirmDelete";
 interface TableRowProps {
   rowData: any;
   index: number;
+  isNotUpdatable?: boolean;
   onDelete: (index: number) => void;
   onUpdate: (index: number) => void;
 }
@@ -22,6 +23,7 @@ export const TableRow: React.FC<TableRowProps> = ({
   rowData,
   index,
   onDelete,
+  isNotUpdatable,
   onUpdate,
 }) => {
   const confirmDelete = (index: number, onClose: () => void) => {
@@ -29,11 +31,11 @@ export const TableRow: React.FC<TableRowProps> = ({
     onClose();
   };
   return (
-    <Tr fontWeight={500} color="darkThemeGrey.700" fontSize={16}>
+    <Tr fontWeight={500} color="darkThemeGrey.100" fontSize={16}>
       <Td borderRight="1px solid" borderRightColor="neutralGrey" isNumeric>
         {index + "."}
       </Td>
-      {Object.keys(rowData).map((k: any, i) => {
+      {Object.keys(rowData)?.map((k: any, i) => {
         return (
           <Td
             borderRight="1px solid"
@@ -45,36 +47,42 @@ export const TableRow: React.FC<TableRowProps> = ({
           </Td>
         );
       })}
-      <Td isNumeric>
-        <Menu>
-          <MenuButton
-            as={IconButton}
-            aria-label="Options"
-            icon={<Options stroke={theme.colors.blue[700]} />}
-            variant="outline"
-          />
-          <MenuList bg={"darkThemeGrey.600"}>
-            <CDSConfirmDelete handleDelete={confirmDelete} index={index}>
+      {isNotUpdatable ? (
+        <Td isNumeric>
+          <Menu>
+            <MenuButton
+              bg={"darkThemeGrey.600"}
+              as={IconButton}
+              aria-label="Options"
+              icon={<Options stroke={"#fff"} />}
+              variant="outline"
+            />
+            <MenuList bg={"darkThemeGrey.600"}>
+              <CDSConfirmDelete handleDelete={confirmDelete} index={index}>
+                <MenuItem
+                  bg="darkThemeGrey.600"
+                  _hover={{ bg: "darkThemeGrey.800" }}
+                  color={"danger.500"}
+                  onClick={() => {
+                    onDelete(index);
+                  }}
+                >
+                  Delete
+                </MenuItem>
+              </CDSConfirmDelete>
               <MenuItem
-                color={"danger.500"}
+                bg="darkThemeGrey.600"
+                _hover={{ bg: "darkThemeGrey.800" }}
                 onClick={() => {
-                  onDelete(index);
+                  onUpdate(index);
                 }}
               >
-                Delete
+                Update
               </MenuItem>
-            </CDSConfirmDelete>
-            <MenuItem
-              color={"danger.1500"}
-              onClick={() => {
-                onUpdate(index);
-              }}
-            >
-              Update
-            </MenuItem>
-          </MenuList>
-        </Menu>
-      </Td>
+            </MenuList>
+          </Menu>
+        </Td>
+      ) : null}
     </Tr>
   );
 };

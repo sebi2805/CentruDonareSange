@@ -35,18 +35,14 @@ export const CDSConfirmDelete: React.FC<ConfirmDelete> = ({
     setLoading(true);
     handleDelete(index, onClose);
   };
-  const colorBg = useColorModeValue("white", "darkThemeGrey.600");
-  const colorBgHover = useColorModeValue(
-    "darkThemeGrey.600",
-    "darkThemeGrey.500"
-  );
+
   return (
     <Box
       w="100%"
       h="100%"
       borderRadius={5}
-      bg={colorBg}
-      _hover={{ bg: colorBgHover }}
+      bg={"darkThemeGrey.600"}
+      _hover={{ bg: "darkThemeGrey.800" }}
     >
       <Flex
         onClick={openModal}

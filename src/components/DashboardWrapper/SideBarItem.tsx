@@ -7,7 +7,7 @@ interface SideBarItemProps {
 }
 export const SideBarItem: React.FC<SideBarItemProps> = ({ url, name }) => {
   const navigation = useNavigate();
-  console.log(url);
+
   const isCurrentPath = url
     .toLocaleLowerCase()
     .includes(document.location.pathname.toLocaleLowerCase());
@@ -17,7 +17,6 @@ export const SideBarItem: React.FC<SideBarItemProps> = ({ url, name }) => {
       <Button
         w="90%"
         h={12}
-        mx={4}
         colorScheme="blue"
         onClick={() => {
           navigation(url);

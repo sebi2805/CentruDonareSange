@@ -117,7 +117,7 @@ export const RecipienteTable: React.FC = () => {
 
   return (
     <>
-      <VStack w="100%" h="100%">
+      <VStack w="100%">
         <HStack w="100%" justify="center" px={8} py={8}>
           <Box fontSize={40} fontWeight="bold" color="darkThemeGrey.100">
             Table Recipiente

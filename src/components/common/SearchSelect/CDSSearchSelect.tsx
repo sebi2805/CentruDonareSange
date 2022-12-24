@@ -102,7 +102,7 @@ export const CDSSearchSelect: React.FC<CDSSearchProps> = (
   };
 
   return (
-    <Box w="100%" h="100%">
+    <Box w="100%" h="100%" pb={1.5}>
       <Select
         isDisabled={props.isDisabled ?? false}
         components={{ Option: CustomOption }}

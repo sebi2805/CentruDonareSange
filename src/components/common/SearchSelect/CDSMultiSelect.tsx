@@ -8,8 +8,8 @@ export interface SearchSelectInterface {
   value: string;
   label: string;
 }
-interface WDSearchProps extends Omit<StateManagedSelect, "onChange"> {
-  onChange: (val: string[]) => void;
+interface CDSSearchProps extends Omit<StateManagedSelect, "onChange"> {
+  onChange: (val: number[]) => void;
   error?: string;
   options: SearchSelectInterface[];
   value: string[];
@@ -22,7 +22,7 @@ export const CustomOption = (props: any) => {
   return <OptionCustom innerProps={innerProps}>{data.label}</OptionCustom>;
 };
 
-export const WDMultiSelect: React.FC<WDSearchProps> = (props) => {
+export const CDSMultiSelect: React.FC<CDSSearchProps> = (props) => {
   const danger = theme.colors.danger[500];
   const neutralGrey = theme.colors.neutralGrey;
   const blue500 = theme.colors.blue[500];
@@ -85,7 +85,7 @@ export const WDMultiSelect: React.FC<WDSearchProps> = (props) => {
     if (didMount) {
       onChange(
         selectValue.map((val) => {
-          return val.value;
+          return parseInt(val.value);
         })
       );
     }

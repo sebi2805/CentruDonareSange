@@ -15,10 +15,7 @@ export const theme = extendTheme({
 
       "*": {
         ".slick-prev:before,.slick-next:before": {
-          color:
-            props.colorMode === "dark"
-              ? "darkThemeGrey.100"
-              : "darkThemeGrey.700",
+          color: "blue.400",
           margin: "5px",
         },
 
@@ -39,16 +36,12 @@ export const theme = extendTheme({
           borderRadius: "10px",
         },
         "&::-webkit-scrollbar-track": {
-          background:
-            props.colorMode === "dark" ? "darkThemeGrey.700" : "white",
-          border: `1px solid ${
-            props.colorMode === "dark" ? "darkThemeGrey.700" : "neutralGrey"
-          }`,
+          background: "white",
+          border: `1px solid ${"blue.400"}`,
           borderRadius: "10px",
         },
         "&::-webkit-scrollbar-thumb": {
-          background:
-            props.colorMode === "dark" ? "blue.400" : "darkThemeGrey.700",
+          background: "blue.400",
           borderRadius: "10px",
         },
       },
