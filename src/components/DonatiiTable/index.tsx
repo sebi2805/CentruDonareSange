@@ -174,7 +174,7 @@ export const DonatiiTable: React.FC = () => {
 
   const onDelete = (index: number) => {
     apiClient
-      .delete(`/api/Donatii/delete?id=${data[index].idDonator}`)
+      .delete(`/api/Donatii/delete?id=${data[index].idDonatie}`)
       .then((res) => {
         setData(data.filter((d, i) => i !== index));
         createToast("Donator deleted succesufully");

@@ -51,10 +51,15 @@ export const CDSTable: React.FC<CDSTableProps> = ({
       if (onSort) onSort((index + 1) * 2 - 1);
     }
   };
-  console.log(tableData);
+
   return (
-    <VStack w="100%" h="100%" align={"flex-start"} justify="flex-start">
-      <TableContainer w="100%" h="100%" px={4}>
+    <VStack w="100%" align={"flex-start"} justify="flex-start">
+      <TableContainer
+        w="100%"
+        maxH={`calc(100vh - 220px)`}
+        overflowY={"auto"}
+        px={4}
+      >
         <Table
           variant="simple"
           size="md"
@@ -65,7 +70,13 @@ export const CDSTable: React.FC<CDSTableProps> = ({
           tableData !== undefined &&
           tableData?.length > 0 ? (
             <>
-              <Thead bg="darkThemeGrey.800" color="white">
+              <Thead
+                bg="darkThemeGrey.800"
+                color="white"
+                top="0"
+                position={"sticky"}
+                zIndex={100}
+              >
                 <Tr>
                   <Th fontWeight={"bold"} fontSize={16} isNumeric color="white">
                     Index
@@ -105,7 +116,7 @@ export const CDSTable: React.FC<CDSTableProps> = ({
                   <Th></Th>
                 </Tr>
               </Thead>
-              <Tbody>
+              <Tbody minH={"fit-content"}>
                 {!isEmpty ? (
                   <>
                     {tableData?.map((t, i) => {

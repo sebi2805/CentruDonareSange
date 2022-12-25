@@ -33,7 +33,7 @@ export const TableRow: React.FC<TableRowProps> = ({
   return (
     <Tr fontWeight={500} color="darkThemeGrey.100" fontSize={16}>
       <Td borderRight="1px solid" borderRightColor="neutralGrey" isNumeric>
-        {index + "."}
+        {index + 1 + "."}
       </Td>
       {Object.keys(rowData)?.map((k: any, i) => {
         return (

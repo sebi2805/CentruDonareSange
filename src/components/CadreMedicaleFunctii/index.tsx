@@ -148,9 +148,9 @@ export const CadreMedicaleFunctii: React.FC = () => {
                   }}
                 />
               </NameWrap>
-              <NameWrap title="Salariu de baza">
+              <NameWrap title="Prenume">
                 <CDSInput
-                  isNumeric
+                  isNumeric={false}
                   placeholder="Introduceti prenumele"
                   value={currentData.prenume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

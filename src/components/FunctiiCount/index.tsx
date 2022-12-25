@@ -46,25 +46,27 @@ export const FunctiiCount: React.FC = () => {
 
   return (
     <>
-      <VStack w="100%">
-        <HStack w="100%" justify="center" px={8} py={8}>
-          <Box fontSize={40} fontWeight="bold" color="darkThemeGrey.100">
-            View FunctiiCount
-          </Box>
-          <Spacer />
-        </HStack>
-        {loading ? (
-          <CDSTable
-            isNotUpdatable
-            onSort={onSort}
-            tableData={data}
-            onDelete={() => {}}
-            onUpdate={() => {}}
-          ></CDSTable>
-        ) : (
-          <CustomSpinner />
-        )}
-      </VStack>
+      <Box>
+        <VStack w="100%">
+          <HStack w="100%" justify="center" px={8} py={8}>
+            <Box fontSize={40} fontWeight="bold" color="darkThemeGrey.100">
+              View FunctiiCount
+            </Box>
+            <Spacer />
+          </HStack>
+          {loading ? (
+            <CDSTable
+              isNotUpdatable
+              onSort={onSort}
+              tableData={data}
+              onDelete={() => {}}
+              onUpdate={() => {}}
+            ></CDSTable>
+          ) : (
+            <CustomSpinner />
+          )}
+        </VStack>
+      </Box>
     </>
   );
 };

@@ -24,7 +24,7 @@ export const DashboardWrapper: React.FC<DashboardWrapperProps> = ({
           {" "}
           Centru Donare Sange
         </Flex>
-        <Box w="100%" overflow={"auto"} position="relative">
+        <Box w="100%" h="100%" overflow={"auto"} position="relative">
           {children}
         </Box>
       </VStack>
