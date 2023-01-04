@@ -65,7 +65,7 @@ export const DonatiiJoinTable: React.FC = () => {
         setOptions(
           res.data.data.map((item: GrupeSangeInterface) => ({
             value: item.idGrupaSange,
-            label: item.denumire,
+            label: item.den_grupa,
           }))
         );
       })
@@ -74,8 +74,11 @@ export const DonatiiJoinTable: React.FC = () => {
       });
   };
   useEffect(() => {
-    if (JSON.stringify(filterData) === JSON.stringify(defaultFilterData))
+    if (JSON.stringify(filterData) === JSON.stringify(defaultFilterData)) {
+      getData();
+      setEmpty(false);
       return;
+    }
     const timeout = setTimeout(() => {
       onSort(0);
     }, 1000);
@@ -92,7 +95,7 @@ export const DonatiiJoinTable: React.FC = () => {
       <VStack w="100%">
         <HStack w="100%" justify="center" px={8} py={8}>
           <Box fontSize={40} fontWeight="bold" color="darkThemeGrey.100">
-            Table Donatii Full
+            Table Donatii Join
           </Box>
           <Spacer />
         </HStack>

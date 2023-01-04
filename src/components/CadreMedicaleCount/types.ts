@@ -1,6 +1,6 @@
 export interface CadreMedicaleCount {
   idCadruMedical: number;
-  count: number;
+  nrDonatii: number;
 }
 export interface FilterCadreMedicaleCount {
   idCadruMedical: number | null;

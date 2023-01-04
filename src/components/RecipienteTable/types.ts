@@ -3,7 +3,7 @@ import { BaseInterfaceModal } from "../utils/types";
 
 export interface RecipienteInterface extends BaseInterfaceModal {
   idRecipient?: number;
-  denumire: string;
+  den_recipient: string;
   culoare: string;
   temperaturaInceput: number;
   temperaturaSfarsit: number;

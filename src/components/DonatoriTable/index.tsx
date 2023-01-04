@@ -24,8 +24,8 @@ export const DonatoriTable: React.FC = () => {
   const [data, setData] = useState<DonatoriInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<DonatoriInterface>({
-    nume: null,
-    prenume: null,
+    d_nume: null,
+    d_prenume: null,
     dataNasterii: "",
     inaltime: 0,
     greutate: 0,
@@ -64,7 +64,7 @@ export const DonatoriTable: React.FC = () => {
       .then((res) => {
         setOptions(
           res.data.data?.map((e: GrupeSangeInterface) => {
-            return { value: e.idGrupaSange, label: e.denumire };
+            return { value: e.idGrupaSange, label: e.den_grupa };
           })
         );
       })
@@ -76,8 +76,8 @@ export const DonatoriTable: React.FC = () => {
   const onCloseModal = () => {
     onClose();
     setCurrentData({
-      nume: null,
-      prenume: null,
+      d_nume: null,
+      d_prenume: null,
       dataNasterii: "",
       inaltime: 0,
       greutate: 0,
@@ -168,10 +168,10 @@ export const DonatoriTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti nume"
-                  value={currentData.nume ?? ""}
+                  value={currentData.d_nume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onChange({
-                      nume: e.target.value === "" ? null : e.target.value,
+                      d_nume: e.target.value === "" ? null : e.target.value,
                     });
                   }}
                 />
@@ -180,10 +180,10 @@ export const DonatoriTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti prenume"
-                  value={currentData.prenume ?? ""}
+                  value={currentData.d_prenume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onChange({
-                      prenume: e.target.value === "" ? null : e.target.value,
+                      d_prenume: e.target.value === "" ? null : e.target.value,
                     });
                   }}
                 />

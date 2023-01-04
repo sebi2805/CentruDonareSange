@@ -3,8 +3,8 @@ import { BaseInterfaceModal } from "../utils/types";
 
 export interface DonatoriInterface extends BaseInterfaceModal {
   idDonator?: number;
-  nume: string | null;
-  prenume: string | null;
+  d_nume: string | null;
+  d_prenume: string | null;
   dataNasterii: string;
   idGrupaSange: number | null;
   greutate: number;

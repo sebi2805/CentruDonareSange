@@ -77,7 +77,10 @@ export const DonatiiTable: React.FC = () => {
       .then((res) => {
         setOptionsCadreMedicale(
           res.data.data?.map((e: CadreMedicaleInterface) => {
-            return { value: e.idCadruMedical, label: e.nume + " " + e.prenume };
+            return {
+              value: e.idCadruMedical,
+              label: e.c_nume + " " + e.c_prenume,
+            };
           })
         );
       })
@@ -103,7 +106,7 @@ export const DonatiiTable: React.FC = () => {
       .then((res) => {
         setOptionsDonatori(
           res.data.data?.map((e: DonatoriInterface) => {
-            return { value: e.idDonator, label: e.nume + " " + e.prenume };
+            return { value: e.idDonator, label: e.d_nume + " " + e.d_prenume };
           })
         );
       })
@@ -116,7 +119,7 @@ export const DonatiiTable: React.FC = () => {
       .then((res) => {
         setOptionsRecipiente(
           res.data.data?.map((e: RecipienteInterface) => {
-            return { value: e.idRecipient, label: e.denumire };
+            return { value: e.idRecipient, label: e.den_recipient };
           })
         );
       })

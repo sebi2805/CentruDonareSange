@@ -2,7 +2,7 @@ import { BaseInterfaceModal } from "../utils/types";
 
 export interface GrupeSangeInterface extends BaseInterfaceModal {
   idGrupaSange?: number;
-  denumire: string | null;
+  den_grupa: string | null;
   anticorpi: string;
   antigene: string;
 }

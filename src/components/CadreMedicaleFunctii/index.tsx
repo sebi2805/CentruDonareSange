@@ -16,8 +16,8 @@ export const CadreMedicaleFunctii: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<CadrulMedicalFunctieInterface>(
     {
-      nume: null,
-      prenume: null,
+      c_nume: null,
+      c_prenume: null,
       idCadruMedical: 0,
       denumire: "",
       salariuBaza: 0,
@@ -51,8 +51,8 @@ export const CadreMedicaleFunctii: React.FC = () => {
     onClose();
     setCurrentData({
       ...currentData,
-      nume: null,
-      prenume: null,
+      c_nume: null,
+      c_prenume: null,
       idCadruMedical: 0,
     });
   };
@@ -140,10 +140,10 @@ export const CadreMedicaleFunctii: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti numele"
-                  value={currentData.nume ?? ""}
+                  value={currentData.c_nume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onChange({
-                      nume: e.target.value === "" ? null : e.target.value,
+                      c_nume: e.target.value === "" ? null : e.target.value,
                     });
                   }}
                 />
@@ -152,10 +152,10 @@ export const CadreMedicaleFunctii: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti prenumele"
-                  value={currentData.prenume ?? ""}
+                  value={currentData.c_prenume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onChange({
-                      prenume: e.target.value === "" ? null : e.target.value,
+                      c_prenume: e.target.value === "" ? null : e.target.value,
                     });
                   }}
                 />

@@ -1,6 +1,6 @@
 export interface FullDonatiiInterface {
-  nume: string;
-  prenume: string;
+  d_nume: string;
+  d_prenume: string;
   dataRecoltate: string;
   dataExpediere: string;
   grupaSange: string;

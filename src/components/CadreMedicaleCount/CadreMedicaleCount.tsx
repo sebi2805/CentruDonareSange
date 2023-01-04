@@ -20,7 +20,7 @@ export const CadreMedicaleCountTable: React.FC = () => {
     idCadruMedical: null,
   });
   const defaultFilterData: FilterCadreMedicaleCount = {
-    minCount: -1,
+    minCount: 0,
     idCadruMedical: null,
   };
   const [options, setOptions] = useState<SearchSelectInterface[]>([]);
@@ -52,7 +52,10 @@ export const CadreMedicaleCountTable: React.FC = () => {
   };
   const getData = async () => {
     await apiClient
-      .post(`/api/Donatii/get-cadreMedicaleCount?order=${0}`, {})
+      .post(`/api/Donatii/get-cadreMedicaleCount?order=${0}`, {
+        minCount: 0,
+        idCadruMedical: null,
+      })
       .then((res) => {
         setData(res.data.data);
         setLoading(true);
@@ -67,7 +70,7 @@ export const CadreMedicaleCountTable: React.FC = () => {
         setOptions(
           res.data.data.map((item: CadreMedicaleInterface) => ({
             value: item.idCadruMedical,
-            label: item.nume ?? "" + item.prenume ?? "",
+            label: item.c_nume ?? "" + item.c_prenume ?? "",
           }))
         );
       })

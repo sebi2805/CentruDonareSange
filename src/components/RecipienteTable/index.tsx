@@ -18,7 +18,7 @@ export const RecipienteTable: React.FC = () => {
   const [data, setData] = useState<RecipienteInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<RecipienteInterface>({
-    denumire: "",
+    den_recipient: "",
     culoare: "",
     temperaturaInceput: 0,
     temperaturaSfarsit: 0,
@@ -53,7 +53,7 @@ export const RecipienteTable: React.FC = () => {
   const onCloseModal = () => {
     onClose();
     setCurrentData({
-      denumire: "",
+      den_recipient: "",
       culoare: "",
       temperaturaInceput: 0,
       temperaturaSfarsit: 0,
@@ -138,9 +138,9 @@ export const RecipienteTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti denumire"
-                  value={currentData.denumire}
+                  value={currentData.den_recipient}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange({ denumire: e.target.value });
+                    onChange({ den_recipient: e.target.value });
                   }}
                 />
               </NameWrap>

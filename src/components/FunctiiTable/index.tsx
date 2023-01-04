@@ -15,7 +15,7 @@ export const FunctiiTable: React.FC = () => {
   const [data, setData] = useState<FunctiiInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<FunctiiInterface>({
-    denumire: "",
+    den_functie: "",
     salariuBaza: 0,
   });
   const onSort = async (index: number) => {
@@ -44,7 +44,7 @@ export const FunctiiTable: React.FC = () => {
   };
   const onCloseModal = () => {
     onClose();
-    setCurrentData({ denumire: "", salariuBaza: 0 });
+    setCurrentData({ den_functie: "", salariuBaza: 0 });
   };
   const onOpenUpdate = (index: number) => {
     onOpen();
@@ -124,10 +124,11 @@ export const FunctiiTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti denumirea"
-                  value={currentData.denumire ?? ""}
+                  value={currentData.den_functie ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onChange({
-                      denumire: e.target.value === "" ? null : e.target.value,
+                      den_functie:
+                        e.target.value === "" ? null : e.target.value,
                     });
                   }}
                 />

@@ -24,8 +24,8 @@ export const CadreMedicaleTable: React.FC = () => {
   const [data, setData] = useState<CadreMedicaleInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentData, setCurrentData] = useState<CadreMedicaleInterface>({
-    nume: null,
-    prenume: null,
+    c_nume: null,
+    c_prenume: null,
     dataAngajarii: moment().format("YYYY-MM-DD"),
     idFunctie: null,
   });
@@ -47,7 +47,7 @@ export const CadreMedicaleTable: React.FC = () => {
       .then((res) => {
         setOptions(
           res.data.data?.map((f: FunctiiInterface) => {
-            return { value: f.idFunctie, label: f.denumire };
+            return { value: f.idFunctie, label: f.den_functie };
           })
         );
       })
@@ -74,8 +74,8 @@ export const CadreMedicaleTable: React.FC = () => {
   const onCloseModal = () => {
     onClose();
     setCurrentData({
-      nume: null,
-      prenume: null,
+      c_nume: null,
+      c_prenume: null,
       dataAngajarii: moment().format("YYYY-MM-DD"),
       idFunctie: null,
     });
@@ -173,10 +173,10 @@ export const CadreMedicaleTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti nume"
-                  value={currentData.nume ?? ""}
+                  value={currentData.c_nume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onChange({
-                      nume: e.target.value === "" ? null : e.target.value,
+                      c_nume: e.target.value === "" ? null : e.target.value,
                     });
                   }}
                 />
@@ -185,10 +185,10 @@ export const CadreMedicaleTable: React.FC = () => {
                 <CDSInput
                   isNumeric={false}
                   placeholder="Introduceti prenume"
-                  value={currentData.prenume ?? ""}
+                  value={currentData.c_prenume ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onChange({
-                      prenume: e.target.value === "" ? null : e.target.value,
+                      c_prenume: e.target.value === "" ? null : e.target.value,
                     });
                   }}
                 />
