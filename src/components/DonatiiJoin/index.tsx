@@ -16,11 +16,11 @@ import { DonatiiFullInterface, DonatiiJoinFilter } from "./types";
 export const DonatiiJoinTable: React.FC = () => {
   const { createError, createToast } = useContext(ErrorServiceContext);
   const [filterData, setFilterData] = useState<DonatiiJoinFilter>({
-    prenume: "",
-    nume: "",
+    prenume: null,
+    nume: null,
     idGrupaSange: null,
   });
-  const defaultFilterData = { prenume: "", nume: "", idGrupaSange: null };
+  const defaultFilterData = { prenume: null, nume: null, idGrupaSange: null };
   const [options, setOptions] = useState<SearchSelectInterface[]>([]);
   const changeFilterData = (data: Partial<DonatiiJoinFilter>) => {
     setFilterData({ ...filterData, ...data });
@@ -104,7 +104,7 @@ export const DonatiiJoinTable: React.FC = () => {
             <CDSInput
               isNumeric={false}
               placeholder={"Nume"}
-              value={filterData.nume.toString()}
+              value={filterData.nume ? filterData?.nume.toString() : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 changeFilterData({ nume: e.target.value });
               }}
@@ -114,7 +114,7 @@ export const DonatiiJoinTable: React.FC = () => {
             <CDSInput
               placeholder="Prenume"
               isNumeric={false}
-              value={filterData.prenume.toString()}
+              value={filterData?.prenume ? filterData.prenume.toString() : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 changeFilterData({ prenume: e.target.value });
               }}

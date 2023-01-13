@@ -101,10 +101,10 @@ export const EchipamentTable: React.FC = () => {
             else return d;
           })
         );
+        onCloseModal();
         createToast("Echipament updated succesufully");
       })
       .catch((err) => {
-        console.log(err);
         createError("Echipament update error");
       });
   };

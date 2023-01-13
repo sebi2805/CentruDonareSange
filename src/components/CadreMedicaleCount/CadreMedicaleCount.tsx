@@ -80,6 +80,7 @@ export const CadreMedicaleCountTable: React.FC = () => {
   };
   useEffect(() => {
     if (JSON.stringify(filterData) === JSON.stringify(defaultFilterData)) {
+      getData();
       return;
     }
     const timer = setTimeout(() => {

@@ -96,6 +96,7 @@ export const ReviziiTehniceTable: React.FC = () => {
             else return d;
           })
         );
+        onCloseModal();
         createToast("RevizieTehnica updated succesufully");
       })
       .catch((err) => {

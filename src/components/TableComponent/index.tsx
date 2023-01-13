@@ -81,7 +81,7 @@ export const CDSTable: React.FC<CDSTableProps> = ({
                   <Th fontWeight={"bold"} fontSize={16} isNumeric color="white">
                     Index
                   </Th>
-                  {Object.keys(tableData[0])?.map((k, i) => {
+                  {Object?.keys(tableData[0] ?? {})?.map((k, i) => {
                     return (
                       <Th
                         color="white"

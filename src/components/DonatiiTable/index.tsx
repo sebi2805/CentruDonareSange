@@ -146,18 +146,19 @@ export const DonatiiTable: React.FC = () => {
 
   const onUpdate = () => {
     apiClient
-      .put(`/api/Donatii/update?id=${currentData.idDonator}`, currentData)
+      .put(`/api/Donatii/update?id=${currentData.idDonatie}`, currentData)
       .then((res) => {
         setData(
           data.map((d) => {
-            if (d.idDonator === currentData.idDonator) return res.data.data;
+            if (d.idDonatie === currentData.idDonatie) return res.data.data;
             else return d;
           })
         );
-        createToast("Donator updated succesufully");
+        createToast("Dinatii updated succesufully");
+        onCloseModal();
       })
       .catch((err) => {
-        createError("Donator update error");
+        createError("Dinatii update error");
       });
   };
   const onCreate = () => {

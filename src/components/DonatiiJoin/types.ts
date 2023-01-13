@@ -9,7 +9,7 @@ export interface DonatiiFullInterface extends BaseInterfaceModal {
   grupaSange: string;
 }
 export interface DonatiiJoinFilter {
-  nume: string;
-  prenume: string;
+  nume: string | null;
+  prenume: string | null;
   idGrupaSange: number | null;
 }

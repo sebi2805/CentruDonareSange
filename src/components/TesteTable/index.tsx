@@ -41,7 +41,6 @@ export const TesteTable: React.FC = () => {
         createToast("Succes");
       })
       .catch((err) => {
-        console.log(err);
         createError("Can't get data.");
       });
   };
@@ -83,14 +82,34 @@ export const TesteTable: React.FC = () => {
       diabet: null,
       idDonatie: null,
     });
+    apiClient
+      .get(`/api/Donatii/getDonatiiWithoutTest`)
+      .then((res) => {
+        setOptions(
+          res.data.data?.map((d: DonatiiInterface) => {
+            return { value: d.idDonatie, label: d.idDonatie };
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        createError("Can't get options.");
+      });
   };
   const onOpenUpdate = (index: number) => {
     onOpen();
-    console.log({ ...data[index], isEdit: true, index: index });
-
+    setOptions([
+      ...options,
+      {
+        value: data[index].idDonatie || "",
+        label: data[index].idDonatie?.toString() || "",
+      },
+    ]);
     setCurrentData({ ...data[index], isEdit: true, index: index });
   };
-
+  useEffect(() => {
+    console.log(options);
+  }, [options]);
   const onUpdate = () => {
     apiClient
       .put(`/api/Teste/update?id=${currentData.idTest}`, currentData)
@@ -101,6 +120,7 @@ export const TesteTable: React.FC = () => {
             else return d;
           })
         );
+        onCloseModal();
         getDonatiiWithoutTest();
         createToast("Test updated succesufully");
       })
@@ -139,7 +159,6 @@ export const TesteTable: React.FC = () => {
   const onChange = (data: Partial<TesteInterface>) => {
     setCurrentData({ ...currentData, ...data });
   };
-  console.log(currentData.idDonatie);
 
   useEffect(() => {
     getData();
@@ -202,7 +221,7 @@ export const TesteTable: React.FC = () => {
                 <CDSSearchSelect
                   options={optionsNegativPozitiv}
                   placeholder="Introduceti rezultat verificare grupajul sanguin"
-                  value={currentData.hiv}
+                  value={currentData.verificareGrupajulSanguin}
                   onChange={(value: number | undefined | null | string) => {
                     onChange({
                       verificareGrupajulSanguin:

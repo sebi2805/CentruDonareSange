@@ -35,7 +35,7 @@ export const TableRow: React.FC<TableRowProps> = ({
       <Td borderRight="1px solid" borderRightColor="neutralGrey" isNumeric>
         {index + 1 + "."}
       </Td>
-      {Object.keys(rowData)?.map((k: any, i) => {
+      {Object.keys(rowData ?? {})?.map((k: any, i) => {
         return (
           <Td
             borderRight="1px solid"

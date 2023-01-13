@@ -23,6 +23,7 @@ export const CadreMedicaleFunctii: React.FC = () => {
       salariuBaza: 0,
     }
   );
+
   const onSort = async (index: number) => {
     await apiClient
       .get(`/api/CadreMedicaleFunctii/get-all?order=${index}`)

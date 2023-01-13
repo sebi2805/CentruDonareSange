@@ -96,6 +96,7 @@ export const SaloaneTable: React.FC = () => {
             else return d;
           })
         );
+        onCloseModal();
         createToast("Saloane updated succesufully");
       })
       .catch((err) => {
