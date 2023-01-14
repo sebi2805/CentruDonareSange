@@ -212,7 +212,7 @@ export const DonatiiTable: React.FC = () => {
             onClose={onCloseModal}
             onCreate={onCreate}
             onUpdate={onUpdate}
-            title="Create cadru medical"
+            title={currentData.isEdit ? "Update donatii  " : "Create donatii  "}
           >
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Id Cadru Medical">

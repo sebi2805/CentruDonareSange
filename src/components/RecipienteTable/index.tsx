@@ -131,7 +131,7 @@ export const RecipienteTable: React.FC = () => {
             onClose={onCloseModal}
             onCreate={onCreate}
             onUpdate={onUpdate}
-            title="Create recipient"
+            title={currentData.isEdit ? "Update recipient" : "Create recipient"}
           >
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Denumire">

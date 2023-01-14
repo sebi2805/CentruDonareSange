@@ -153,7 +153,7 @@ export const SaloaneTable: React.FC = () => {
             onClose={onCloseModal}
             onCreate={onCreate}
             onUpdate={onUpdate}
-            title="Create salon"
+            title={currentData.isEdit ? "Update salon" : "Create salon"}
           >
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Ora Inceput">

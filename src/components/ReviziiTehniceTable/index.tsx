@@ -153,7 +153,7 @@ export const ReviziiTehniceTable: React.FC = () => {
             onClose={onCloseModal}
             onCreate={onCreate}
             onUpdate={onUpdate}
-            title="Create cadru medical"
+            title={currentData.isEdit ? "Update revizie" : "Create revizie"}
           >
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Rezultat Revizie Tehnica">

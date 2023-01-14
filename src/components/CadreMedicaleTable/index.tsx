@@ -166,7 +166,11 @@ export const CadreMedicaleTable: React.FC = () => {
             onClose={onCloseModal}
             onCreate={onCreate}
             onUpdate={onUpdate}
-            title="Create cadru medical"
+            title={
+              currentData.isEdit
+                ? "Update cadru medical"
+                : "Create cadru medical"
+            }
           >
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Nume">

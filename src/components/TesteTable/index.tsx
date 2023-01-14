@@ -180,7 +180,7 @@ export const TesteTable: React.FC = () => {
             onClose={onCloseModal}
             onCreate={onCreate}
             onUpdate={onUpdate}
-            title="Create test"
+            title={currentData.isEdit ? "Update test" : "Create test"}
           >
             <VStack w="100%" h="100%" justify={"flex-start"}>
               <NameWrap title="Rezultat HIV">

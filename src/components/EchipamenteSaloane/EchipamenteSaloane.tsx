@@ -187,7 +187,11 @@ export const EchipamenteSaloane: React.FC = () => {
             onClose={onCloseModal}
             onCreate={onCreate}
             onUpdate={onUpdate}
-            title="Create grupa sange"
+            title={
+              currentData.isEdit
+                ? "Update echipament salon"
+                : "Create echipament salon"
+            }
           >
             <VStack w="100%" h="100%" justify={"flex-start"}>
               {!currentData.isEdit ? (
